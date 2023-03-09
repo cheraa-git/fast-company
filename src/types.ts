@@ -9,8 +9,8 @@ export interface IUser {
 }
 
 export interface IQuality {
-  _id: string,
-  name: string,
+  _id: string
+  name: string
   color: string
 }
 
