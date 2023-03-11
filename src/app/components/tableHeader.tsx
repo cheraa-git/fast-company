@@ -28,6 +28,10 @@ export const TableHeader: FC<TableHeaderProps> = ({ onSort, selectedSort, column
           {...{ role: columns[column].path && 'button' }}
         >
           {columns[column].name}
+          {
+            columns[column].path === selectedSort.path &&
+            <i className={`bi bi-caret-${selectedSort.order === 'desc' ? 'down' : 'up'}-fill`} />
+          }
         </th>
       ))}
     </tr>
