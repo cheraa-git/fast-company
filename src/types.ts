@@ -19,4 +19,4 @@ export interface IProfession {
   name: string
 }
 
-export type IProfessions = Record<string, IProfession>
+export type IProfessions = IProfession[]

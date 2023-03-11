@@ -1,5 +1,5 @@
+import { professionsObject as professions } from './professions.api'
 import { IUser } from '../../../types'
-import { professions } from './professions.api'
 
 const qualities = {
   tedious: {
@@ -145,6 +145,14 @@ const users = [
   }
 ]
 
-export const fetchAll = (): IUser[] => {
-  return users
+const fetchAll = async (): Promise<IUser[]> => {
+  return await new Promise((resolve) => {
+    window.setTimeout(() => {
+      resolve(users)
+    }, 2000)
+  })
+}
+
+export default {
+  fetchAll
 }

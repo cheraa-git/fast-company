@@ -11,7 +11,7 @@ import { SearchStatus } from './searchStatus'
 export const Users: FC = (): JSX.Element => {
   const { users } = useUserContext()
   const [currentPage, setCurrentPage] = useState(1)
-  const [professions, setProfessions] = useState<IProfessions | undefined>(undefined)
+  const [professions, setProfessions] = useState<IProfessions>()
   const [selectedProf, setSelectedProf] = useState<IProfession>()
   const pageSize = 4
 
@@ -36,7 +36,7 @@ export const Users: FC = (): JSX.Element => {
   }
 
   const filteredUsers = selectedProf
-    ? users.filter((user) => user.profession === selectedProf)
+    ? users.filter((user) => user.profession._id === selectedProf._id)
     : users
   const count = filteredUsers.length
   const userCrop = paginate(filteredUsers, currentPage, pageSize)
