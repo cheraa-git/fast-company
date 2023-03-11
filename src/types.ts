@@ -18,3 +18,5 @@ export interface IProfession {
   _id: string
   name: string
 }
+
+export type IProfessions = Record<string, IProfession>

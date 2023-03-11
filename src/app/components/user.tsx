@@ -4,7 +4,7 @@ import { Quality } from './quality'
 import { Bookmark } from './bookmark'
 import { useUserContext } from '../context/userContext'
 
-export const User: FC<{ user: IUser }> = ({ user }) => {
+export const User: FC<{ user: IUser }> = ({ user }): JSX.Element => {
   const { onDelete } = useUserContext()
   return (
     <tr>

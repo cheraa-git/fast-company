@@ -1,10 +1,9 @@
 import React, { FC, useState } from 'react'
 import { Users } from './components/users'
 import api from './api'
-import { SearchStatus } from './components/searchStatus'
 import { UserContext } from './context/userContext'
 
-export const App: FC = () => {
+export const App: FC = (): JSX.Element => {
   const [users, setUsers] = useState(api.users.fetchAll)
 
   const handleDelete = (id: string) => {
@@ -27,7 +26,6 @@ export const App: FC = () => {
         onDelete: handleDelete
       }}
     >
-      <SearchStatus />
       <Users />
     </UserContext.Provider>
   )

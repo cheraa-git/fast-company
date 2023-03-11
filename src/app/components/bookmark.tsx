@@ -6,7 +6,7 @@ interface BookmarkProps {
   user: IUser
 }
 
-export const Bookmark: FC<BookmarkProps> = ({ user }) => {
+export const Bookmark: FC<BookmarkProps> = ({ user }): JSX.Element => {
   const { onToggleBookmark } = useUserContext()
   return (
     <td>
