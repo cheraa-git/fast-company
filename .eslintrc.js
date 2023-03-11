@@ -18,15 +18,16 @@ module.exports = {
       'warn',
       { anonymous: 'always', named: 'never', asyncArrow: 'always' }
     ],
+    'react/react-in-jsx-scope': 'off',
+    'no-multiple-empty-lines': ['warn', { max: 2 }],
+    'multiline-ternary': ['warn', 'always-multiline'],
+    'react/jsx-key': 'warn',
+    'no-trailing-spaces': 'off',
     '@typescript-eslint/consistent-type-imports': ['error', { prefer: 'no-type-imports' }],
     '@typescript-eslint/no-confusing-void-expression': ['warn', { ignoreArrowShorthand: true }],
-    'react/react-in-jsx-scope': 'off',
-    '@typescript-eslint/explicit-function-return-type': 'off',
-    // '@typescript-eslint/no-floating-promises': ['warn', { ignoreVoid: true, ignoreIIFE: false }],
-    // 'no-floating-promises': ['warn', { ignoreVoid: true, ignoreIIFE: false }],
-    '@typescript-eslint/strict-boolean-expressions': ['warn', { allowNullableBoolean: true }],
     '@typescript-eslint/no-unused-vars': 'warn',
-    'no-multiple-empty-lines': ['warn', { max: 2 }],
-    'multiline-ternary': ['warn', 'always-multiline']
+    '@typescript-eslint/explicit-function-return-type': 'off',
+    '@typescript-eslint/no-floating-promises': 'off',
+    '@typescript-eslint/strict-boolean-expressions': 'off'
   }
 }

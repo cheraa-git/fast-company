@@ -1,14 +1,14 @@
 import _ from 'lodash'
 
-interface GroupListProps<ItemType> {
-  items: Record<string, ItemType> | ItemType[]
-  onItemSelect: (item: ItemType) => void
-  selectedItem?: ItemType
+interface GroupListProps {
+  items: Record<string, any> | any[]
+  onItemSelect: (item: any) => void
+  selectedItem?: any
   valueProperty?: string
   contentProperty?: string
 }
 
-export const GroupList = <ItemType extends Record<string, any>>(props: GroupListProps<ItemType>): JSX.Element => {
+export const GroupList = (props: GroupListProps): JSX.Element => {
   const { items, onItemSelect, selectedItem, valueProperty = '_id', contentProperty = 'name' } = props
   const normalizedItems = _.isArray(items) ? items : Object.values(items)
   return (

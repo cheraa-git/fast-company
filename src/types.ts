@@ -1,3 +1,5 @@
+import { ReactNode } from 'react'
+
 export interface IUser {
   _id: string
   name: string
@@ -20,3 +22,16 @@ export interface IProfession {
 }
 
 export type IProfessions = IProfession[]
+
+export interface Sort {
+  path: string
+  order: 'asc' | 'desc'
+}
+
+export interface Column {
+  path?: string
+  name?: string
+  component?: ((item: any) => ReactNode) | string
+}
+
+export type Columns = Record<string, Column>

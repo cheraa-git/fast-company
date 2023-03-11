@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 import { IUser } from '../../types'
 
-export const SearchStatus: FC<{ users: IUser[] }> = ({ users }) => {
+export const SearchStatus: FC<{ users: IUser[] }> = ({ users }): JSX.Element => {
   const length = users.length
   const getLastNumb = () => {
     const strLength = String(length)

@@ -9,13 +9,11 @@ interface BookmarkProps {
 export const Bookmark: FC<BookmarkProps> = ({ user }): JSX.Element => {
   const { onToggleBookmark } = useUserContext()
   return (
-    <td>
-      <button
-        onClick={() => {
-          onToggleBookmark(user._id)
-        }}
-        className={`p-1 bi bi-bookmark${user.bookmark ? '-heart-fill' : ''}`}
-      />
-    </td>
+    <button
+      onClick={() => {
+        onToggleBookmark(user._id)
+      }}
+      className={`p-1 bi bi-bookmark${user.bookmark ? '-heart-fill' : ''}`}
+    />
   )
 }
