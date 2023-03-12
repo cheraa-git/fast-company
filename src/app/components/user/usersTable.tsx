@@ -1,9 +1,10 @@
 import React, { FC } from 'react'
-import { Columns, IUser, Sort } from '../../types'
-import { Bookmark } from './bookmark'
-import { QualitiesList } from './qualitiesList'
-import { useUserContext } from '../context/userContext'
-import { Table } from './table'
+import { Columns, IUser, Sort } from '../../../types'
+import { Bookmark } from '../bookmark'
+import { QualitiesList } from '../qualitiesList'
+import { useUserContext } from '../../context/userContext'
+import { Table } from '../table/table'
+import { Link } from 'react-router-dom'
 
 interface UsersTableProps {
   users: IUser[]
@@ -15,7 +16,7 @@ export const UsersTable: FC<UsersTableProps> = ({ users, onSort, selectedSort })
   const { onDelete } = useUserContext()
 
   const columns: Columns<IUser> = {
-    name: { path: 'name', name: 'Имя' },
+    name: { path: 'name', name: 'Имя', component: user => <Link to={`/users/${user._id}`}>{user.name}</Link> },
     qualities: { name: 'Качество', component: (user) => <QualitiesList qualities={user.qualities} /> },
     professions: { path: 'profession.name', name: 'Профессия' },
     completedMeetings: { path: 'completedMeetings', name: 'Встретился, раз' },

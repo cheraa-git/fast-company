@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import { Columns, Sort } from '../../types'
+import { Columns, Sort } from '../../../types'
 
 interface TableHeaderProps {
   onSort: (sort: Sort) => void

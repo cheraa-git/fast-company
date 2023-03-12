@@ -1,13 +1,14 @@
 import React, { FC, useEffect, useState } from 'react'
-import { Pagination } from './pagination'
-import { paginate } from '../utils/paginate'
-import api from '../api'
-import { GroupList } from './groupList'
-import { IProfession, IProfessions, IUser, Sort } from '../../types'
-import { SearchStatus } from './searchStatus'
+import { Pagination } from '../pagination'
+import { paginate } from '../../utils/paginate'
+import api from '../../api'
+import { GroupList } from '../groupList'
+import { IProfession, IProfessions, IUser, Sort } from '../../../types'
+import { SearchStatus } from '../searchStatus'
 import { UsersTable } from './usersTable'
-import { UserContext } from '../context/userContext'
+import { UserContext } from '../../context/userContext'
 import _ from 'lodash'
+import { Spinner } from '../Spinner'
 
 export const Users: FC = (): JSX.Element => {
   const [users, setUsers] = useState<IUser[]>()
@@ -50,7 +51,7 @@ export const Users: FC = (): JSX.Element => {
     setSelectedProf(undefined)
   }
 
-  if (!users) return <p>loading...</p>
+  if (!users) return <Spinner />
 
   const filteredUsers = selectedProf ? users.filter((user) => user.profession._id === selectedProf._id) : users
   const count = filteredUsers.length

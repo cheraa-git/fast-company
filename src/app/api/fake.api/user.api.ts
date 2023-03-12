@@ -153,6 +153,15 @@ const fetchAll = async (): Promise<IUser[]> => {
   })
 }
 
+const getById = async (id: string): Promise<IUser | undefined> => {
+  return await new Promise(resolve => {
+    window.setTimeout(() => {
+      resolve(users.find(user => user._id === id))
+    }, 1000)
+  })
+}
+
 export default {
-  fetchAll
+  fetchAll,
+  getById
 }

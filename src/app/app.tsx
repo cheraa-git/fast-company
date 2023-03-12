@@ -1,8 +1,19 @@
 import React, { FC } from 'react'
-import { Users } from './components/users'
+import { Route, Switch } from 'react-router-dom'
+import { Navbar } from './components/navbar'
+import { MainLayout } from './layouts/mainLayout'
+import { LoginLayout } from './layouts/loginLayout'
+import { UserLayout } from './layouts/userLayout'
 
 export const App: FC = (): JSX.Element => {
   return (
-    <Users />
+    <>
+      <Navbar />
+      <Switch>
+        <Route exact path="/" component={MainLayout} />
+        <Route path="/login" component={LoginLayout} />
+        <Route path="/users/:userId?" component={UserLayout} />
+      </Switch>
+    </>
   )
 }

@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import _ from 'lodash'
-import { Columns } from '../../types'
+import { Columns } from '../../../types'
 
 interface TableBodyProps {
   data: Array<Record<string, any>>
