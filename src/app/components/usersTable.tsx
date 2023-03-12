@@ -13,7 +13,8 @@ interface UsersTableProps {
 
 export const UsersTable: FC<UsersTableProps> = ({ users, onSort, selectedSort }): JSX.Element => {
   const { onDelete } = useUserContext()
-  const columns: Columns = {
+
+  const columns: Columns<IUser> = {
     name: { path: 'name', name: 'Имя' },
     qualities: { name: 'Качество', component: (user) => <QualitiesList qualities={user.qualities} /> },
     professions: { path: 'profession.name', name: 'Профессия' },

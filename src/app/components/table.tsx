@@ -4,7 +4,7 @@ import { TableHeader } from './tableHeader'
 import { TableBody } from './tableBody'
 
 interface TableProps {
-  data?: any[]
+  data?: Array<Record<string, any>>
   columns?: Columns
   onSort?: (sort: Sort) => void
   selectedSort?: Sort

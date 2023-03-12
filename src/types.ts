@@ -28,10 +28,10 @@ export interface Sort {
   order: 'asc' | 'desc'
 }
 
-export interface Column {
+export interface Column<ItemType = any> {
   path?: string
   name?: string
-  component?: ((item: any) => ReactNode) | string
+  component?: ((item: ItemType) => ReactNode) | string
 }
 
-export type Columns = Record<string, Column>
+export type Columns<ItemType = any> = Record<string, Column<ItemType>>

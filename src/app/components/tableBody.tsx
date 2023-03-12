@@ -3,7 +3,7 @@ import _ from 'lodash'
 import { Columns } from '../../types'
 
 interface TableBodyProps {
-  data: any[]
+  data: Array<Record<string, any>>
   columns: Columns
 }
 
