@@ -9,8 +9,10 @@ export interface UserContextType {
 
 export const UserContext = createContext<UserContextType>({
   users: [],
-  onDelete: () => {},
-  onToggleBookmark: () => {}
+  onDelete: () => {
+  },
+  onToggleBookmark: () => {
+  }
 })
 
 export const useUserContext = () => useContext(UserContext)

@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import { FC } from 'react'
 import { Columns, IUser, Sort } from '../../../types'
 import { Bookmark } from '../bookmark'
 import { QualitiesList } from '../qualitiesList'

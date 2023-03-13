@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import { FC } from 'react'
 
 export const Spinner: FC = () => (
   <div className="d-flex justify-content-center mt-5">

@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 import { Pagination } from '../pagination'
 import { paginate } from '../../utils/paginate'
 import api from '../../api'

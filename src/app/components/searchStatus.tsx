@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import { FC } from 'react'
 import { IUser } from '../../types'
 
 export const SearchStatus: FC<{ users: IUser[] }> = ({ users }): JSX.Element => {

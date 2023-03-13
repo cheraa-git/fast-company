@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import { FC } from 'react'
 import { IQuality } from '../../types'
 
 export const Quality: FC<{ quality: IQuality }> = ({ quality }): JSX.Element => (

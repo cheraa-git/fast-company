@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import { FC } from 'react'
 import { Quality } from './quality'
 import { IQuality } from '../../types'
 
