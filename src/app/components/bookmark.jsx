@@ -1,12 +1,8 @@
-import { FC } from 'react'
-import { IUser } from '../../types'
 import { useUserContext } from '../context/userContext'
+import PropTypes from 'prop-types'
 
-interface BookmarkProps {
-  user: IUser
-}
 
-export const Bookmark: FC<BookmarkProps> = ({ user }): JSX.Element => {
+const Bookmark = ({ user }) => {
   const { onToggleBookmark } = useUserContext()
   return (
     <button
@@ -17,3 +13,9 @@ export const Bookmark: FC<BookmarkProps> = ({ user }): JSX.Element => {
     />
   )
 }
+
+Bookmark.propTypes = {
+  user: PropTypes.object.isRequired
+}
+
+export { Bookmark }

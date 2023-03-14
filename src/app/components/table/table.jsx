@@ -1,17 +1,9 @@
-import { FC, ReactNode } from 'react'
-import { Columns, Sort } from '../../../types'
 import { TableHeader } from './tableHeader'
 import { TableBody } from './tableBody'
+import PropTypes from 'prop-types'
 
-interface TableProps {
-  data?: Array<Record<string, any>>
-  columns?: Columns
-  onSort?: (sort: Sort) => void
-  selectedSort?: Sort
-  children?: ReactNode
-}
 
-export const Table: FC<TableProps> = ({ onSort, selectedSort, columns, data, children }): JSX.Element => {
+const Table = ({ onSort, selectedSort, columns, data, children }) => {
   return (
     <table className="table container">
       {
@@ -22,7 +14,16 @@ export const Table: FC<TableProps> = ({ onSort, selectedSort, columns, data, chi
         </>
       }
       {children}
-
     </table>
   )
 }
+
+Table.propTypes = {
+  onSort: PropTypes.func,
+  selectedSort: PropTypes.object,
+  columns: PropTypes.object,
+  data: PropTypes.array,
+  children: PropTypes.array
+}
+
+export { Table }

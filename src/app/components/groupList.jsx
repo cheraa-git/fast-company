@@ -1,14 +1,8 @@
 import _ from 'lodash'
+import PropTypes from 'prop-types'
 
-interface GroupListProps {
-  items: Record<string, any> | any[]
-  onItemSelect: (item: any) => void
-  selectedItem?: any
-  valueProperty?: string
-  contentProperty?: string
-}
 
-export const GroupList = (props: GroupListProps): JSX.Element => {
+const GroupList = (props) => {
   const { items, onItemSelect, selectedItem, valueProperty = '_id', contentProperty = 'name' } = props
   const normalizedItems = _.isArray(items) ? items : Object.values(items)
   return (
@@ -26,3 +20,17 @@ export const GroupList = (props: GroupListProps): JSX.Element => {
     </ul>
   )
 }
+
+GroupList.defaultProps = {
+  valueProperty: '_id',
+  contentProperty: 'name'
+}
+GroupList.propTypes = {
+  items: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+  valueProperty: PropTypes.string.isRequired,
+  contentProperty: PropTypes.string.isRequired,
+  onItemSelect: PropTypes.func,
+  selectedItem: PropTypes.object
+}
+
+export { GroupList }

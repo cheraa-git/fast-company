@@ -1,14 +1,9 @@
-import { FC } from 'react'
 import _ from 'lodash'
-import { Columns } from '../../../types'
+import PropTypes from 'prop-types'
 
-interface TableBodyProps {
-  data: Array<Record<string, any>>
-  columns: Columns
-}
 
-export const TableBody: FC<TableBodyProps> = ({ data, columns }): JSX.Element => {
-  const renderContent = (item: any, column: string) => {
+const TableBody = ({ data, columns }) => {
+  const renderContent = (item, column) => {
     if (columns[column].component) {
       const component = columns[column].component
       if (typeof component === 'function') {
@@ -20,7 +15,7 @@ export const TableBody: FC<TableBodyProps> = ({ data, columns }): JSX.Element =>
   }
   return (
     <tbody>
-    {data.map((item: any) => (
+    {data.map((item) => (
       <tr key={item._id}>
         {Object.keys(columns).map(column => {
           return <td key={column}>{renderContent(item, column)}</td>
@@ -30,3 +25,10 @@ export const TableBody: FC<TableBodyProps> = ({ data, columns }): JSX.Element =>
     </tbody>
   )
 }
+
+TableBody.propTypes = {
+  data: PropTypes.array.isRequired,
+  columns: PropTypes.object.isRequired
+}
+
+export { TableBody }

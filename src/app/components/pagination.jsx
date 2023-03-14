@@ -1,14 +1,8 @@
-import { FC } from 'react'
 import _ from 'lodash'
+import PropTypes from 'prop-types'
 
-interface PaginationProps {
-  itemsCount: number
-  pageSize: number
-  onPageChange: (pageIndex: number) => void
-  currentPage: number
-}
 
-export const Pagination: FC<PaginationProps> = ({ itemsCount, pageSize, onPageChange, currentPage }): JSX.Element => {
+const Pagination = ({ itemsCount, pageSize, onPageChange, currentPage }) => {
   const pageCont = Math.ceil(itemsCount / pageSize)
   if (pageCont === 1) return <></>
   const pages = _.range(1, pageCont + 1)
@@ -27,3 +21,12 @@ export const Pagination: FC<PaginationProps> = ({ itemsCount, pageSize, onPageCh
     </nav>
   )
 }
+
+Pagination.propTypes = {
+  itemsCount: PropTypes.number.isRequired,
+  pageSize: PropTypes.number.isRequired,
+  onPageChange: PropTypes.func.isRequired,
+  currentPage: PropTypes.number.isRequired
+}
+
+export { Pagination }

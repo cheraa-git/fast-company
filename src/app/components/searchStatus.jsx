@@ -1,7 +1,7 @@
-import { FC } from 'react'
-import { IUser } from '../../types'
+import PropTypes from 'prop-types'
 
-export const SearchStatus: FC<{ users: IUser[] }> = ({ users }): JSX.Element => {
+
+const SearchStatus = ({ users }) => {
   const length = users.length
   const getLastNumb = () => {
     const strLength = String(length)
@@ -23,3 +23,7 @@ export const SearchStatus: FC<{ users: IUser[] }> = ({ users }): JSX.Element => 
     </h2>
   )
 }
+
+SearchStatus.propTypes = { users: PropTypes.array }
+
+export { SearchStatus }

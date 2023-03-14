@@ -1,21 +1,20 @@
-import { FC, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Pagination } from '../pagination'
 import { paginate } from '../../utils/paginate'
 import api from '../../api'
 import { GroupList } from '../groupList'
-import { IProfession, IProfessions, IUser, Sort } from '../../../types'
 import { SearchStatus } from '../searchStatus'
 import { UsersTable } from './usersTable'
 import { UserContext } from '../../context/userContext'
 import _ from 'lodash'
 import { Spinner } from '../Spinner'
 
-export const Users: FC = (): JSX.Element => {
-  const [users, setUsers] = useState<IUser[]>()
+export const Users = () => {
+  const [users, setUsers] = useState()
   const [currentPage, setCurrentPage] = useState(1)
-  const [professions, setProfessions] = useState<IProfessions>()
-  const [selectedProf, setSelectedProf] = useState<IProfession>()
-  const [sortBy, setSortBy] = useState<Sort>({ path: 'name', order: 'asc' })
+  const [professions, setProfessions] = useState()
+  const [selectedProf, setSelectedProf] = useState()
+  const [sortBy, setSortBy] = useState({ path: 'name', order: 'asc' })
   const pageSize = 8
 
   useEffect(() => {
@@ -27,11 +26,11 @@ export const Users: FC = (): JSX.Element => {
     setCurrentPage(1)
   }, [selectedProf])
 
-  const handleDelete = (id: string) => {
+  const handleDelete = (id) => {
     setUsers((prev) => prev?.filter((user) => user._id !== id))
   }
 
-  const handleToggleBookmark = (userId: string) => {
+  const handleToggleBookmark = (userId) => {
     const uploadUsers = users?.map((user) => {
       if (user._id === userId) user.bookmark = !user.bookmark
       return user
@@ -39,11 +38,11 @@ export const Users: FC = (): JSX.Element => {
     setUsers(uploadUsers)
   }
 
-  const handlePageChange = (pageIndex: number) => {
+  const handlePageChange = (pageIndex) => {
     setCurrentPage(pageIndex)
   }
 
-  const handleProfessionSelect = (item: IProfession) => {
+  const handleProfessionSelect = (item) => {
     setSelectedProf(item)
   }
 

@@ -1,10 +1,9 @@
-import { FC } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 
-export const Navbar: FC = () => {
+export const Navbar = () => {
   const location = useLocation()
 
-  const getLinkClass = (path: string) => {
+  const getLinkClass = (path) => {
     if (path === location.pathname) return 'nav-link disabled'
     return 'nav-link'
   }

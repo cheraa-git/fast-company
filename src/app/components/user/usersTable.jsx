@@ -1,21 +1,15 @@
-import { FC } from 'react'
-import { Columns, IUser, Sort } from '../../../types'
 import { Bookmark } from '../bookmark'
 import { QualitiesList } from '../qualitiesList'
 import { useUserContext } from '../../context/userContext'
 import { Table } from '../table/table'
 import { Link } from 'react-router-dom'
+import PropTypes from 'prop-types'
 
-interface UsersTableProps {
-  users: IUser[]
-  onSort: (sort: Sort) => void
-  selectedSort: Sort
-}
 
-export const UsersTable: FC<UsersTableProps> = ({ users, onSort, selectedSort }): JSX.Element => {
+const UsersTable = ({ users, onSort, selectedSort }) => {
   const { onDelete } = useUserContext()
 
-  const columns: Columns<IUser> = {
+  const columns = {
     name: { path: 'name', name: 'Имя', component: user => <Link to={`/users/${user._id}`}>{user.name}</Link> },
     qualities: { name: 'Качество', component: (user) => <QualitiesList qualities={user.qualities} /> },
     professions: { path: 'profession.name', name: 'Профессия' },
@@ -32,3 +26,11 @@ export const UsersTable: FC<UsersTableProps> = ({ users, onSort, selectedSort })
     <Table data={users} columns={columns} onSort={onSort} selectedSort={selectedSort} />
   )
 }
+
+UsersTable.propTypes = {
+  users: PropTypes.array.isRequired,
+  onSort: PropTypes.func.isRequired,
+  selectedSort: PropTypes.object.isRequired
+}
+
+export { UsersTable }

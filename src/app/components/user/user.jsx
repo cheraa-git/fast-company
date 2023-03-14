@@ -1,14 +1,13 @@
-import { FC, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 import api from '../../api'
-import { IUser } from '../../../types'
 import { Spinner } from '../Spinner'
 import { QualitiesList } from '../qualitiesList'
 
-export const User: FC = () => {
-  const userId = useParams<{ userId: string }>().userId
+const User = () => {
+  const { userId } = useParams()
   const history = useHistory()
-  const [user, setUser] = useState<IUser>()
+  const [user, setUser] = useState()
 
   useEffect(() => {
     api.users.getById(userId).then(response => setUser(response))
@@ -26,3 +25,5 @@ export const User: FC = () => {
     </div>
   )
 }
+
+export { User }

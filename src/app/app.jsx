@@ -1,11 +1,10 @@
-import { FC } from 'react'
 import { Route, Switch } from 'react-router-dom'
 import { Navbar } from './components/navbar'
 import { MainLayout } from './layouts/mainLayout'
 import { LoginLayout } from './layouts/loginLayout'
 import { UserLayout } from './layouts/userLayout'
 
-export const App: FC = (): JSX.Element => {
+export const App = () => {
   return (
     <>
       <Navbar />

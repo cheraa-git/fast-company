@@ -1,5 +1,3 @@
-import { IProfessions } from '../../../types'
-
 export const professionsObject = {
   doctor: { _id: '67rdca3eeb7f6fgeed471818', name: 'Доктор' },
   waiter: { _id: '67rdca3eeb7f6fgeed471820', name: 'Официант' },
@@ -17,8 +15,8 @@ export const professions = [
   { _id: '67rdca3eeb7f6fgeed471829', name: 'Повар' }
 ]
 
-export const fetchAll = async (): Promise<IProfessions> => {
-  return await new Promise((resolve) => {
+export const fetchAll = async () => {
+  return new Promise((resolve) => {
     setTimeout(() => {
       resolve(professions)
     }, 2000)

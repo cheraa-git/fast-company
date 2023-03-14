@@ -1,14 +1,8 @@
-import { FC } from 'react'
-import { Columns, Sort } from '../../../types'
+import PropTypes from 'prop-types'
 
-interface TableHeaderProps {
-  onSort: (sort: Sort) => void
-  selectedSort: Sort
-  columns: Columns
-}
 
-export const TableHeader: FC<TableHeaderProps> = ({ onSort, selectedSort, columns }): JSX.Element => {
-  const handleSort = (item?: string) => {
+export const TableHeader = ({ onSort, selectedSort, columns }) => {
+  const handleSort = (item) => {
     if (!item) return
     if (selectedSort.path === item) {
       onSort({ ...selectedSort, order: selectedSort.order === 'asc' ? 'desc' : 'asc' })
@@ -37,4 +31,10 @@ export const TableHeader: FC<TableHeaderProps> = ({ onSort, selectedSort, column
     </tr>
     </thead>
   )
+}
+
+TableHeader.propTypes = {
+  onSort: PropTypes.func.isRequired,
+  selectedSort: PropTypes.object.isRequired,
+  columns: PropTypes.object.isRequired
 }
