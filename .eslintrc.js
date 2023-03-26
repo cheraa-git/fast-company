@@ -15,15 +15,7 @@ module.exports = {
     'multiline-ternary': ['warn', 'always-multiline'],
     'react/jsx-key': 'warn',
     'no-trailing-spaces': 'off',
-    // '@typescript-eslint/space-before-function-paren': [
-    //   'warn',
-    //   { anonymous: 'always', named: 'never', asyncArrow: 'always' }
-    // ],
-    // '@typescript-eslint/consistent-type-imports': ['error', { prefer: 'no-type-imports' }],
-    // '@typescript-eslint/no-confusing-void-expression': ['warn', { ignoreArrowShorthand: true }],
-    // '@typescript-eslint/no-unused-vars': 'warn',
-    // '@typescript-eslint/explicit-function-return-type': 'off',
-    // '@typescript-eslint/no-floating-promises': 'off',
-    // '@typescript-eslint/strict-boolean-expressions': 'off'
+    'no-unused-vars': 'warn',
+    'no-empty': 'warn'
   }
 }
