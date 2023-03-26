@@ -15,6 +15,7 @@ export const Users = () => {
   const [professions, setProfessions] = useState()
   const [selectedProf, setSelectedProf] = useState()
   const [sortBy, setSortBy] = useState({ path: 'name', order: 'asc' })
+  const [searchValue, setSearchValue] = useState('')
   const pageSize = 8
 
   useEffect(() => {
@@ -44,15 +45,31 @@ export const Users = () => {
 
   const handleProfessionSelect = (item) => {
     setSelectedProf(item)
+    setSearchValue('')
   }
 
   const clearFilter = () => {
     setSelectedProf(undefined)
   }
 
+  const handleSearch = (event) => {
+    setSearchValue(event.target.value)
+    clearFilter()
+  }
+
+  const getFilteredUsers = () => {
+    if (selectedProf) {
+      return users.filter(user => user.profession._id === selectedProf._id)
+    }
+    if (searchValue) {
+      return users.filter(user => user.name.toLowerCase().includes(searchValue.toLowerCase()))
+    }
+    return users
+  }
+
   if (!users) return <Spinner />
 
-  const filteredUsers = selectedProf ? users.filter((user) => user.profession._id === selectedProf._id) : users
+  const filteredUsers = getFilteredUsers()
   const count = filteredUsers.length
   const sortedUsers = _.orderBy(filteredUsers, [sortBy.path], [sortBy.order])
   const userCrop = paginate(sortedUsers, currentPage, pageSize)
@@ -74,6 +91,13 @@ export const Users = () => {
         )}
         <div className="d-flex flex-column">
           <SearchStatus users={filteredUsers} />
+          <input
+            className="form-control"
+            type="text"
+            value={searchValue}
+            onChange={handleSearch}
+            placeholder="Search..."
+          />
           {users.length > 0 && <UsersTable users={userCrop} selectedSort={sortBy} onSort={setSortBy} />}
           <div className="d-flex justify-content-center">
             <Pagination itemsCount={count} pageSize={pageSize} onPageChange={handlePageChange}
