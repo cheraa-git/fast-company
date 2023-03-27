@@ -5,7 +5,6 @@ import api from '../../api'
 import { GroupList } from '../groupList'
 import { SearchStatus } from '../searchStatus'
 import { UsersTable } from './usersTable'
-import { UserContext } from '../../context/userContext'
 import _ from 'lodash'
 import { Spinner } from '../Spinner'
 
@@ -75,37 +74,42 @@ export const Users = () => {
   const userCrop = paginate(sortedUsers, currentPage, pageSize)
 
   return (
-    <UserContext.Provider value={{ users, onToggleBookmark: handleToggleBookmark, onDelete: handleDelete }}>
-      <div className="d-flex">
-        {professions && (
-          <div className="d-flex flex-column flex-shrink-0 p-3">
-            <GroupList
-              items={professions}
-              selectedItem={selectedProf}
-              onItemSelect={handleProfessionSelect}
-            />
-            <button className="btn btn-secondary mt-2" onClick={clearFilter}>
-              Очистить
-            </button>
-          </div>
-        )}
-        <div className="d-flex flex-column">
-          <SearchStatus users={filteredUsers} />
-          <input
-            className="form-control"
-            type="text"
-            value={searchValue}
-            onChange={handleSearch}
-            placeholder="Search..."
+    <div className="d-flex">
+      {professions && (
+        <div className="d-flex flex-column flex-shrink-0 p-3">
+          <GroupList
+            items={professions}
+            selectedItem={selectedProf}
+            onItemSelect={handleProfessionSelect}
           />
-          {users.length > 0 && <UsersTable users={userCrop} selectedSort={sortBy} onSort={setSortBy} />}
-          <div className="d-flex justify-content-center">
-            <Pagination itemsCount={count} pageSize={pageSize} onPageChange={handlePageChange}
-                        currentPage={currentPage} />
-          </div>
+          <button className="btn btn-secondary mt-2" onClick={clearFilter}>
+            Очистить
+          </button>
         </div>
-
+      )}
+      <div className="d-flex flex-column">
+        <SearchStatus users={filteredUsers} />
+        <input
+          className="form-control"
+          type="text"
+          value={searchValue}
+          onChange={handleSearch}
+          placeholder="Search..."
+        />
+        {users.length > 0 &&
+          <UsersTable
+            users={userCrop}
+            selectedSort={sortBy}
+            onSort={setSortBy}
+            onDelete={handleDelete}
+            onToggleBookmark={handleToggleBookmark}
+          />
+        }
+        <div className="d-flex justify-content-center">
+          <Pagination itemsCount={count} pageSize={pageSize} onPageChange={handlePageChange}
+                      currentPage={currentPage} />
+        </div>
       </div>
-    </UserContext.Provider>
+    </div>
   )
 }
