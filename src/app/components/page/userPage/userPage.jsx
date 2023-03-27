@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
-import api from '../../api'
-import { Spinner } from '../Spinner'
-import { QualitiesList } from '../qualitiesList'
+import api from '../../../api'
+import { Spinner } from '../../ui/Spinner'
+import { QualitiesList } from '../../ui/qualities/qualitiesList'
 
-const User = () => {
+const UserPage = () => {
   const { userId } = useParams()
   const history = useHistory()
   const [user, setUser] = useState()
@@ -26,4 +26,4 @@ const User = () => {
   )
 }
 
-export { User }
+export { UserPage }

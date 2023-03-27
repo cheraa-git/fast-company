@@ -1,9 +1,9 @@
 import { useParams } from 'react-router-dom'
-import { Users } from '../components/user/users'
-import { User } from '../components/user/user'
+import UserPage from '../components/page/userPage'
+import UsersListPage from '../components/page/usersListPage'
 
 export const UserLayout = () => {
   const { userId } = useParams()
-  return userId ? <User /> : <Users />
+  return userId ? <UserPage /> : <UsersListPage />
 }
 

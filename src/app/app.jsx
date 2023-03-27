@@ -1,5 +1,5 @@
 import { Route, Switch } from 'react-router-dom'
-import { Navbar } from './components/navbar'
+import { Navbar } from './components/ui/navbar'
 import { MainLayout } from './layouts/mainLayout'
 import { LoginLayout } from './layouts/loginLayout'
 import { UserLayout } from './layouts/userLayout'
