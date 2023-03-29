@@ -1,40 +1,24 @@
 import { useEffect, useState } from 'react'
-import { validator } from '../../utils/validator'
 import { TextField } from '../common/form/textField'
 import { CheckBoxField } from '../common/form/checkBoxField'
+import * as yup from 'yup'
 
 export const LoginForm = () => {
   const [data, setData] = useState({ email: '', password: '', stayOn: false })
   const [errors, setErrors] = useState({})
+  const validateScheme = yup.object({
+    password: yup
+      .string()
+      .required('Password is required')
+      .matches(/(?=.*[A-Z])/, 'The password must contain at least one uppercase character')
+      .matches(/(?=.*[0-9])/, 'The password must contain at least one digit')
+      .matches(/(?=.*[!@#$%^&*])/, 'The password must contain at least one of the special characters (!@#$%^&*)')
+      .min(8, 'The min password length is 8'),
+    email: yup.string().required('Email is required').email('Invalid email')
+  })
 
   const handleChange = (target) => {
     setData(prev => ({ ...prev, [target.name]: target.value }))
-  }
-
-  const validatorConfig = {
-    email: {
-      isRequired: {
-        message: 'Email is required'
-      },
-      isEmail: {
-        message: 'Invalid email'
-      }
-    },
-    password: {
-      isRequired: {
-        message: 'Password is required'
-      },
-      isCapitalSymbol: {
-        message: 'The password must contain at least one uppercase character'
-      },
-      isContainDigit: {
-        message: 'The password must contain at least one digit'
-      },
-      min: {
-        message: 'The min password length is 8',
-        value: 8
-      }
-    }
   }
 
   useEffect(() => {
@@ -42,8 +26,9 @@ export const LoginForm = () => {
   }, [data])
 
   const validate = () => {
-    const errors = validator(data, validatorConfig)
-    setErrors(errors)
+    validateScheme.validate(data)
+      .then(() => setErrors({}))
+      .catch((err) => setErrors({ [err.path]: err.message }))
     return Object.keys(errors).length === 0
   }
 
