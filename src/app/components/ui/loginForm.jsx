@@ -6,7 +6,7 @@ export const LoginForm = () => {
   const [data, setData] = useState({ email: '', password: '' })
   const [errors, setErrors] = useState({})
 
-  const handleChange = ({ target }) => {
+  const handleChange = (target) => {
     setData(prev => ({ ...prev, [target.name]: target.value }))
   }
 

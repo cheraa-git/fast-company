@@ -5,6 +5,10 @@ export const SelectField = ({ label, value, onChange, name, options, defaultOpti
     ? Object.keys(options).map(optionName => ({ name: options[optionName].name, _id: options[optionName]._id }))
     : options
 
+  const handleChange = ({ target }) => {
+    onChange({ name: target.name, value: target.value })
+  }
+
   const getInputClasses = () => {
     return 'form-select' + (error ? ' is-invalid' : '')
   }
@@ -16,7 +20,7 @@ export const SelectField = ({ label, value, onChange, name, options, defaultOpti
         id="validationCustom04"
         name={name}
         value={value}
-        onChange={onChange}
+        onChange={handleChange}
       >
         <option disabled value="">{defaultOption}</option>
         {optionsArray && optionsArray.map(option => (
