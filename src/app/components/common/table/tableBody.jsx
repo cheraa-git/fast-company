@@ -2,13 +2,11 @@ import _ from 'lodash'
 import PropTypes from 'prop-types'
 
 
-const TableBody = ({ data, columns }) => {
+export const TableBody = ({ data, columns }) => {
   const renderContent = (item, column) => {
     if (columns[column].component) {
       const component = columns[column].component
-      if (typeof component === 'function') {
-        return component(item)
-      }
+      if (typeof component === 'function') return component(item)
       return component
     }
     return _.get(item, columns[column].path ?? '')
@@ -30,5 +28,3 @@ TableBody.propTypes = {
   data: PropTypes.array.isRequired,
   columns: PropTypes.object.isRequired
 }
-
-export { TableBody }

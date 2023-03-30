@@ -24,7 +24,6 @@ export const RadioField = ({ name, onChange, options, value, label }) => {
           </div>
         ))}
       </div>
-
     </div>
   )
 }

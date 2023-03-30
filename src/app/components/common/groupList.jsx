@@ -2,8 +2,7 @@ import _ from 'lodash'
 import PropTypes from 'prop-types'
 
 
-const GroupList = (props) => {
-  const { items, onItemSelect, selectedItem, valueProperty = '_id', contentProperty = 'name' } = props
+export const GroupList = ({ items, onItemSelect, selectedItem, valueProperty, contentProperty }) => {
   const normalizedItems = _.isArray(items) ? items : Object.values(items)
   return (
     <ul className="list-group">
@@ -32,5 +31,3 @@ GroupList.propTypes = {
   onItemSelect: PropTypes.func,
   selectedItem: PropTypes.object
 }
-
-export { GroupList }

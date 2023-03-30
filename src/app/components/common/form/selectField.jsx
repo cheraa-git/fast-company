@@ -12,6 +12,7 @@ export const SelectField = ({ label, value, onChange, name, options, defaultOpti
   const getInputClasses = () => {
     return 'form-select' + (error ? ' is-invalid' : '')
   }
+
   return (
     <div className="mb-4">
       <label htmlFor={name} className="form-label">{label}</label>
@@ -29,12 +30,7 @@ export const SelectField = ({ label, value, onChange, name, options, defaultOpti
           </option>
         ))}
       </select>
-      {
-        error &&
-        <div className="invalid-feedback">
-          {error}
-        </div>
-      }
+      {error && <div className="invalid-feedback">{error}</div>}
     </div>
   )
 }

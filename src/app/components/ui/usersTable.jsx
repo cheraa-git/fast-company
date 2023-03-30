@@ -5,7 +5,7 @@ import Table from '../common/table'
 import Qualities from './qualities'
 
 
-const UsersTable = ({ users, onSort, selectedSort, onDelete, onToggleBookmark }) => {
+export const UsersTable = ({ users, onSort, selectedSort, onDelete, onToggleBookmark }) => {
   const columns = {
     name: { path: 'name', name: 'Имя', component: user => <Link to={`/users/${user._id}`}>{user.name}</Link> },
     qualities: { name: 'Качество', component: (user) => <Qualities qualities={user.qualities} /> },
@@ -32,4 +32,3 @@ UsersTable.propTypes = {
   onToggleBookmark: PropTypes.func.isRequired
 }
 
-export { UsersTable }

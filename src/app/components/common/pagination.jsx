@@ -2,11 +2,11 @@ import _ from 'lodash'
 import PropTypes from 'prop-types'
 
 
-const Pagination = ({ itemsCount, pageSize, onPageChange, currentPage }) => {
+export const Pagination = ({ itemsCount, pageSize, onPageChange, currentPage }) => {
   const pageCont = Math.ceil(itemsCount / pageSize)
-  if (pageCont === 1) return <></>
   const pages = _.range(1, pageCont + 1)
 
+  if (pageCont === 1) return <></>
   return (
     <nav>
       <ul className="pagination">
@@ -29,4 +29,3 @@ Pagination.propTypes = {
   currentPage: PropTypes.number.isRequired
 }
 
-export { Pagination }

@@ -106,8 +106,12 @@ export const UsersListPage = () => {
           />
         }
         <div className="d-flex justify-content-center">
-          <Pagination itemsCount={count} pageSize={pageSize} onPageChange={handlePageChange}
-                      currentPage={currentPage} />
+          <Pagination
+            itemsCount={count}
+            pageSize={pageSize}
+            onPageChange={handlePageChange}
+            currentPage={currentPage}
+          />
         </div>
       </div>
     </div>

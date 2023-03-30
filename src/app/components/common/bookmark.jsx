@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 
 
-const Bookmark = ({ user, onToggleBookmark }) => {
+export const Bookmark = ({ user, onToggleBookmark }) => {
   return (
     <button
       onClick={() => {
@@ -16,5 +16,3 @@ Bookmark.propTypes = {
   user: PropTypes.object.isRequired,
   onToggleBookmark: PropTypes.func.isRequired
 }
-
-export { Bookmark }

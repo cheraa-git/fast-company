@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 
 
-const SearchStatus = ({ users }) => {
+export const SearchStatus = ({ users }) => {
   const length = users.length
   const getLastNumb = () => {
     const strLength = String(length)
@@ -24,6 +24,6 @@ const SearchStatus = ({ users }) => {
   )
 }
 
-SearchStatus.propTypes = { users: PropTypes.array }
-
-export { SearchStatus }
+SearchStatus.propTypes = {
+  users: PropTypes.array
+}

@@ -5,10 +5,9 @@ export const TableHeader = ({ onSort, selectedSort, columns }) => {
   const handleSort = (item) => {
     if (!item) return
     if (selectedSort.path === item) {
-      onSort({ ...selectedSort, order: selectedSort.order === 'asc' ? 'desc' : 'asc' })
-    } else {
-      onSort({ path: item, order: 'asc' })
+      return onSort({ ...selectedSort, order: selectedSort.order === 'asc' ? 'desc' : 'asc' })
     }
+    onSort({ path: item, order: 'asc' })
   }
 
   return (

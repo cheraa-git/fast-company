@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import { useState } from 'react'
 
 
-const TextField = ({ label, type, name, value, onChange, error }) => {
+export const TextField = ({ label, type, name, value, onChange, error }) => {
   const [showPassword, setShowPassword] = useState(false)
 
   const toggleShowPassword = () => {
@@ -53,5 +53,3 @@ TextField.propTypes = {
   onChange: PropTypes.func,
   error: PropTypes.string
 }
-
-export { TextField }

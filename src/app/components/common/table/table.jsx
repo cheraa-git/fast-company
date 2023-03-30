@@ -3,7 +3,7 @@ import { TableBody } from './tableBody'
 import PropTypes from 'prop-types'
 
 
-const Table = ({ onSort, selectedSort, columns, data, children }) => {
+export const Table = ({ onSort, selectedSort, columns, data, children }) => {
   return (
     <table className="table container">
       {
@@ -25,5 +25,3 @@ Table.propTypes = {
   data: PropTypes.array,
   children: PropTypes.array
 }
-
-export { Table }
