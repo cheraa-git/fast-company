@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 
 export const SelectField = ({ label, value, onChange, name, options, defaultOption, error }) => {
   const optionsArray = !Array.isArray(options) && typeof options === 'object'
-    ? Object.keys(options).map(optionName => ({ name: options[optionName].name, _id: options[optionName]._id }))
+    ? Object.values(options)
     : options
 
   const handleChange = ({ target }) => {
@@ -14,18 +14,18 @@ export const SelectField = ({ label, value, onChange, name, options, defaultOpti
   }
   return (
     <div className="mb-4">
-      <label htmlFor="validationCustom04" className="form-label">{label}</label>
+      <label htmlFor={name} className="form-label">{label}</label>
       <select
         className={getInputClasses()}
-        id="validationCustom04"
+        id={name}
         name={name}
         value={value}
         onChange={handleChange}
       >
         <option disabled value="">{defaultOption}</option>
-        {optionsArray && optionsArray.map(option => (
-          <option key={option._id} value={option._id}>
-            {option.name}
+        {optionsArray.length > 0 && optionsArray.map(option => (
+          <option key={option.value} value={option.value}>
+            {option.label}
           </option>
         ))}
       </select>

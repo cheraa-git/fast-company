@@ -1,4 +1,4 @@
-const qualities = {
+export const qualities = {
   tedious: {
     _id: '67rdca3eeb7f6fgeed471198',
     name: 'Нудила',

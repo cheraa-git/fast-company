@@ -17,12 +17,19 @@ export const RegisterForm = () => {
     license: false
   })
   const [errors, setErrors] = useState({})
-  const [professions, setProfessions] = useState()
-  const [qualities, setQualities] = useState({})
+  const [professions, setProfessions] = useState([])
+  const [qualities, setQualities] = useState([])
 
   useEffect(() => {
-    api.professions.fetchAll().then((data) => setProfessions(data))
-    api.qualities.fetchAll().then(data => setQualities(data))
+    api.professions.fetchAll().then((data) => setProfessions(Object.values(data).map(profession => ({
+      value: profession._id,
+      label: profession.name
+    }))))
+    api.qualities.fetchAll().then(data => setQualities(Object.values(data).map(quality => ({
+      label: quality.name,
+      value: quality._id,
+      color: quality.color
+    }))))
   }, [])
 
   const handleChange = (target) => {
