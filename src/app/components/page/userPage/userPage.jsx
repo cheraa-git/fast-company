@@ -21,7 +21,7 @@ const UserPage = () => {
       <QualitiesList qualities={user.qualities} />
       <p className="mt-2">Встретился, раз: {user.completedMeetings}</p>
       <h2>Rate: {user.rate}</h2>
-      <button onClick={() => history.push('/users')}>Все пользователи</button>
+      <button onClick={() => history.push(`/users/${userId}/edit`)}>Edit</button>
     </div>
   )
 }

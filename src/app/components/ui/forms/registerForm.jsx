@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react'
-import { validator } from '../../utils/validator/validator'
-import { TextField } from '../common/form/textField'
-import api from '../../api'
-import { SelectField } from '../common/form/selectField'
-import { RadioField } from '../common/form/radioField'
-import { MultiSelectField } from '../common/form/multiSelectField'
-import { CheckBoxField } from '../common/form/checkBoxField'
-import { registerValidatorConfig } from '../../utils/validator/validatorConfigs'
+import { validator } from '../../../utils/validator/validator'
+import { TextField } from '../../common/form/textField'
+import { SelectField } from '../../common/form/selectField'
+import { RadioField } from '../../common/form/radioField'
+import { MultiSelectField } from '../../common/form/multiSelectField'
+import { CheckBoxField } from '../../common/form/checkBoxField'
+import { registerValidatorConfig } from '../../../utils/validator/validatorConfigs'
+import { getProfessionsQuery, getQualitiesQuery } from '../../../utils/apiQueries'
 
 
 export const RegisterForm = () => {
@@ -23,15 +23,8 @@ export const RegisterForm = () => {
   const [qualities, setQualities] = useState([])
 
   useEffect(() => {
-    api.professions.fetchAll().then((data) => setProfessions(Object.values(data).map(profession => ({
-      value: profession._id,
-      label: profession.name
-    }))))
-    api.qualities.fetchAll().then(data => setQualities(Object.values(data).map(quality => ({
-      label: quality.name,
-      value: quality._id,
-      color: quality.color
-    }))))
+    getProfessionsQuery().then(professions => setProfessions(professions))
+    getQualitiesQuery().then(qualities => setQualities(qualities))
   }, [])
 
   const handleChange = (target) => {

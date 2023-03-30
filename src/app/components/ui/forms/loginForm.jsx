@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
-import { validator } from '../../utils/validator/validator'
-import { TextField } from '../common/form/textField'
-import { CheckBoxField } from '../common/form/checkBoxField'
-import { loginValidatorConfig } from '../../utils/validator/validatorConfigs'
+import { validator } from '../../../utils/validator/validator'
+import { TextField } from '../../common/form/textField'
+import { CheckBoxField } from '../../common/form/checkBoxField'
+import { loginValidatorConfig } from '../../../utils/validator/validatorConfigs'
 
 export const LoginForm = () => {
   const [data, setData] = useState({ email: '', password: '', stayOn: false })

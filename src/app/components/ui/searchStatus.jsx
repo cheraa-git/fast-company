@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 
 export const SearchStatus = ({ users }) => {
   const length = users.length
+
   const getLastNumb = () => {
     const strLength = String(length)
     if (strLength.at(-2) === '1') {
@@ -11,6 +12,7 @@ export const SearchStatus = ({ users }) => {
       return Number(strLength.at(-1))
     }
   }
+
   const label = getLastNumb() > 1 && getLastNumb() < 5 ? 'человека тусанут' : 'человек тусанет'
   return (
     <h2>

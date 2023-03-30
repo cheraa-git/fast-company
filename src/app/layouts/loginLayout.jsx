@@ -1,7 +1,7 @@
-import { LoginForm } from '../components/ui/loginForm'
+import { LoginForm } from '../components/ui/forms/loginForm'
 import { useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { RegisterForm } from '../components/ui/registerForm'
+import { RegisterForm } from '../components/ui/forms/registerForm'
 
 
 export const LoginLayout = () => {

@@ -59,3 +59,26 @@ export const registerValidatorConfig = {
     }
   }
 }
+
+export const editUserValidatorConfig = {
+  email: {
+    isRequired: {
+      message: 'Email is required'
+    },
+    isEmail: {
+      message: 'Invalid email'
+    }
+  },
+
+  profession: {
+    isRequired: {
+      message: 'Be sure to choose your profession'
+    }
+  },
+  name: {
+    isRequired: {
+      message: 'Name is required'
+    }
+  }
+
+}

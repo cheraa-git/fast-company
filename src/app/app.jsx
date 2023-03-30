@@ -11,7 +11,7 @@ export const App = () => {
       <Switch>
         <Route exact path="/" component={MainLayout} />
         <Route path="/login/:type?" component={LoginLayout} />
-        <Route path="/users/:userId?" component={UserLayout} />
+        <Route path="/users/:userId?/:mode?" component={UserLayout} />
       </Switch>
     </>
   )
