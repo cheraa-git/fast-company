@@ -3,6 +3,7 @@ import { useHistory, useParams } from 'react-router-dom'
 import api from '../../../api'
 import { Spinner } from '../../ui/Spinner'
 import { QualitiesList } from '../../ui/qualities/qualitiesList'
+import { getRandomAvatar } from '../../../utils/randomAvatar'
 
 const UserPage = () => {
   const { userId } = useParams()
@@ -28,9 +29,11 @@ const UserPage = () => {
               </button>
               <div className="d-flex flex-column align-items-center text-center position-relative">
                 <img
-                  src="https://avatars.dicebear.com/api/avataaars/qweqwdas.svg"
-                  className="rounded-circle"
-                  width="150"
+                  src={getRandomAvatar()}
+                  className="rounded-circle shadow-1-strong me-3"
+                  alt="avatar"
+                  width="200"
+                  height="200"
                 />
                 <div className="mt-3">
                   <h4>{user.name}</h4>
@@ -94,7 +97,7 @@ const UserPage = () => {
                   <div className="col">
                     <div className="d-flex flex-start">
                       <img
-                        src="https://avatars.dicebear.com/api/avataaars/qweqasdas.svg"
+                        src={getRandomAvatar()}
                         className="rounded-circle shadow-1-strong me-3"
                         alt="avatar"
                         width="65"
