@@ -1,5 +1,5 @@
 import { SelectField } from '../../common/form/selectField'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import PropTypes from 'prop-types'
 import { useParams } from 'react-router-dom'
 import api from '../../../api'
@@ -14,10 +14,6 @@ export const CommentForm = ({ users, setComments }) => {
     comment: ''
   })
   const [errors, setErrors] = useState({})
-
-  useEffect(() => {
-    validate()
-  }, [data])
 
   const validate = () => {
     const errors = validator(data, commentValidatorConfig)
