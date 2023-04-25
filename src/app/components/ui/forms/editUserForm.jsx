@@ -6,8 +6,8 @@ import { useEffect, useState } from 'react'
 import { validator } from '../../../utils/validator/validator'
 import { editUserValidatorConfig } from '../../../utils/validator/validatorConfigs'
 import PropTypes from 'prop-types'
-import { updateUserQuery } from '../../../utils/apiQueries'
 import { useHistory } from 'react-router-dom'
+import query from '../../../utils/query'
 
 export const EditUserForm = ({ user, professions, qualities }) => {
   const history = useHistory()
@@ -46,7 +46,7 @@ export const EditUserForm = ({ user, professions, qualities }) => {
     e.preventDefault()
     const isValid = validate()
     if (!isValid) return
-    updateUserQuery(user._id, { ...data, profession: getProfessionById(data.profession) })
+    query.updateUser(user._id, { ...data, profession: getProfessionById(data.profession) })
       .then((updatedUser) => history.push(`/users/${updatedUser._id}`))
   }
 

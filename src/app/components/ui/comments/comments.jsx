@@ -1,23 +1,21 @@
 import { CommentForm } from '../forms/commentForm'
 import { useEffect, useState } from 'react'
 import api from '../../../api'
-import _ from 'lodash'
 import PropTypes from 'prop-types'
 import { Comment } from './comment'
+import query from '../../../utils/query'
 
 export const Comments = ({ userId }) => {
   const [comments, setComments] = useState([])
   const [users, setUsers] = useState([])
 
   useEffect(() => {
-    api.comments.fetchCommentsForUser(userId).then(response => setComments(_.orderBy(response, ['created_at'], ['desc'])))
-    api.users.fetchAll().then(response => setUsers(response.map(user => ({ value: user._id, label: user.name }))))
+    query.getComments(userId).then(response => setComments(response))
+    query.getUsersOptions().then(response => setUsers(response))
   }, [])
 
   const handleDelete = (commentId) => {
-    api.comments.remove(commentId).then(id => {
-      setComments(prev => prev.filter(comment => comment._id !== id))
-    })
+    api.comments.remove(commentId).then(id => setComments(prev => prev.filter(comment => comment._id !== id)))
   }
   return (
     <>

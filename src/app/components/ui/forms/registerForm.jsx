@@ -6,7 +6,7 @@ import { RadioField } from '../../common/form/radioField'
 import { MultiSelectField } from '../../common/form/multiSelectField'
 import { CheckBoxField } from '../../common/form/checkBoxField'
 import { registerValidatorConfig } from '../../../utils/validator/validatorConfigs'
-import { getProfessionsQuery, getQualitiesQuery } from '../../../utils/apiQueries'
+import query from '../../../utils/query'
 
 
 export const RegisterForm = () => {
@@ -23,8 +23,8 @@ export const RegisterForm = () => {
   const [qualities, setQualities] = useState([])
 
   useEffect(() => {
-    getProfessionsQuery().then(professions => setProfessions(professions))
-    getQualitiesQuery().then(qualities => setQualities(qualities))
+    query.getProfessionOptions().then(professions => setProfessions(professions))
+    query.getQualityOptions().then(qualities => setQualities(qualities))
   }, [])
 
   const handleChange = (target) => {
