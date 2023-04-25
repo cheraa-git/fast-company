@@ -1,9 +1,11 @@
 import { getRandomAvatar } from '../../utils/randomAvatar'
 import PropTypes from 'prop-types'
 import { useHistory } from 'react-router-dom'
+import { useMemo } from 'react'
 
 export const UserCard = ({ user }) => {
   const history = useHistory()
+  const userAvatar = useMemo(getRandomAvatar, [user._id])
 
   const handleEdit = () => {
     history.push(`/users/${user._id}/edit`)
@@ -17,7 +19,7 @@ export const UserCard = ({ user }) => {
         </button>
         <div className="d-flex flex-column align-items-center text-center position-relative">
           <img
-            src={getRandomAvatar()}
+            src={userAvatar}
             className="rounded-circle shadow-1-strong me-3"
             alt="avatar"
             width="200"

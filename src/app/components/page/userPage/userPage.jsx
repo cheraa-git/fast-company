@@ -2,9 +2,9 @@ import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import api from '../../../api'
 import { Spinner } from '../../ui/Spinner'
-import { QualitiesList } from '../../ui/qualities/qualitiesList'
-import { Comments } from '../../ui/comments/comments'
 import { UserCard } from '../../ui/userCard'
+import Comments from '../../ui/comments'
+import QualitiesList from '../../ui/qualities'
 
 const UserPage = () => {
   const { userId } = useParams()

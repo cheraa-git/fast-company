@@ -1,11 +1,12 @@
 import { getRandomAvatar } from '../../../utils/randomAvatar'
 import PropTypes from 'prop-types'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import api from '../../../api'
 import { dateFormatter } from '../../../utils/dateFormatter'
 
 export const Comment = ({ comment, onDelete }) => {
   const [user, setUser] = useState({})
+  const userAvatar = useMemo(getRandomAvatar, [comment._id])
 
   useEffect(() => {
     api.users.getById(comment.userId).then(response => setUser(response))
@@ -21,7 +22,7 @@ export const Comment = ({ comment, onDelete }) => {
         <div className="col">
           <div className="d-flex flex-start">
             <img
-              src={getRandomAvatar()}
+              src={userAvatar}
               className="rounded-circle shadow-1-strong me-3"
               alt="avatar"
               width="65"
