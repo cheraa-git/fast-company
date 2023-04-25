@@ -1,28 +1,35 @@
 import { CommentForm } from '../forms/commentForm'
 import { useEffect, useState } from 'react'
 import api from '../../../api'
-import PropTypes from 'prop-types'
 import { Comment } from './comment'
 import query from '../../../utils/query'
+import { useParams } from 'react-router-dom'
 
-export const Comments = ({ userId }) => {
+export const Comments = () => {
+  const { userId } = useParams()
   const [comments, setComments] = useState([])
-  const [users, setUsers] = useState([])
 
   useEffect(() => {
     query.getComments(userId).then(response => setComments(response))
-    query.getUsersOptions().then(response => setUsers(response))
   }, [])
+
+  const handleSubmit = (data) => {
+    api.comments.add({ ...data, pageId: userId })
+      .then((newComment) => {
+        setComments(prev => [newComment, ...prev])
+      })
+  }
 
   const handleDelete = (commentId) => {
     api.comments.remove(commentId).then(id => setComments(prev => prev.filter(comment => comment._id !== id)))
   }
+
   return (
     <>
       <div className="card mb-2">
         <div className="card-body">
           <h2>New comment</h2>
-          <CommentForm users={users} setComments={setComments} />
+          <CommentForm onSubmit={handleSubmit} />
         </div>
       </div>
       <div className="card mb-3">
@@ -38,7 +45,4 @@ export const Comments = ({ userId }) => {
   )
 }
 
-Comments.propTypes = {
-  userId: PropTypes.string.isRequired,
-  className: PropTypes.string
-}
+

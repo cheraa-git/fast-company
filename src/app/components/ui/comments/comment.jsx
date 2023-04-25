@@ -3,9 +3,10 @@ import PropTypes from 'prop-types'
 import { useEffect, useMemo, useState } from 'react'
 import api from '../../../api'
 import { dateFormatter } from '../../../utils/dateFormatter'
+import { Spinner } from '../Spinner'
 
 export const Comment = ({ comment, onDelete }) => {
-  const [user, setUser] = useState({})
+  const [user, setUser] = useState()
   const userAvatar = useMemo(getRandomAvatar, [comment._id])
 
   useEffect(() => {
@@ -16,6 +17,7 @@ export const Comment = ({ comment, onDelete }) => {
     onDelete(comment._id)
   }
 
+  if (!user) return <div className="mb-4"><Spinner /></div>
   return (
     <div className="bg-light card-body mb-3">
       <div className="row">

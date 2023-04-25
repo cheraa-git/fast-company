@@ -1,4 +1,4 @@
-import { getRandomAvatar } from '../../utils/randomAvatar'
+import { getRandomAvatar } from '../../../utils/randomAvatar'
 import PropTypes from 'prop-types'
 import { useHistory } from 'react-router-dom'
 import { useMemo } from 'react'

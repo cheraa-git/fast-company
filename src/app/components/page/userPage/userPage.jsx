@@ -2,11 +2,12 @@ import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import api from '../../../api'
 import { Spinner } from '../../ui/Spinner'
-import { UserCard } from '../../ui/userCard'
+import { UserCard } from '../../ui/user/userCard'
 import Comments from '../../ui/comments'
-import QualitiesList from '../../ui/qualities'
+import { QualitiesCard } from '../../ui/user/qualitiesCard'
+import { MeetingsCard } from '../../ui/user/meetingsCard'
 
-const UserPage = () => {
+export const UserPage = () => {
   const { userId } = useParams()
   const [user, setUser] = useState()
 
@@ -20,31 +21,13 @@ const UserPage = () => {
       <div className="row gutters-sm">
         <div className="col-md-4 mb-3">
           <UserCard user={user} />
-          <div className="card mb-3">
-            <div className="card-body d-flex flex-column justify-content-center text-center">
-              <h5 className="card-title">
-                <span>Qualities</span>
-              </h5>
-              <div>
-                <QualitiesList qualities={user.qualities} />
-              </div>
-            </div>
-          </div>
-          <div className="card mb-3">
-            <div className="card-body d-flex flex-column justify-content-center text-center">
-              <h5 className="card-title">
-                <span>Completed meetings</span>
-              </h5>
-              <h1 className="display-1">{user.completedMeetings}</h1>
-            </div>
-          </div>
+          <QualitiesCard qualities={user.qualities} />
+          <MeetingsCard completedMeetings={user.completedMeetings} />
         </div>
         <div className="col-md-8">
-          <Comments userId={userId} />
+          <Comments />
         </div>
       </div>
     </div>
   )
 }
-
-export { UserPage }
