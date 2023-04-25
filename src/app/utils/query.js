@@ -1,6 +1,7 @@
 import api from '../api'
+import _ from 'lodash'
 
-export const getUserByIdQuery = async (userId) => {
+const getUser = async (userId) => {
   const user = await api.users.getById(userId)
   return {
     ...user,
@@ -8,7 +9,13 @@ export const getUserByIdQuery = async (userId) => {
   }
 }
 
-export const getQualitiesQuery = async () => {
+export const getUsersOptions = async () => {
+  const users = await api.users.fetchAll()
+  return users.map(user => ({ value: user._id, label: user.name }))
+}
+
+
+const getQualityOptions = async () => {
   const qualities = await api.qualities.fetchAll()
   return Object.values(qualities).map(quality => ({
     value: quality._id,
@@ -17,7 +24,7 @@ export const getQualitiesQuery = async () => {
   }))
 }
 
-export const getProfessionsQuery = async () => {
+const getProfessionOptions = async () => {
   const professions = await api.professions.fetchAll()
   return Object.values(professions).map(profession => ({
     value: profession._id,
@@ -25,7 +32,7 @@ export const getProfessionsQuery = async () => {
   }))
 }
 
-export const updateUserQuery = async (userId, data) => {
+const updateUser = async (userId, data) => {
   const sendData = {
     ...data,
     qualities: data.qualities.map(quality => ({
@@ -33,4 +40,18 @@ export const updateUserQuery = async (userId, data) => {
     }))
   }
   return await api.users.update(userId, sendData)
+}
+
+const getComments = async (userId) => {
+  const comments = await api.comments.fetchCommentsForUser(userId)
+  return _.orderBy(comments, ['created_at'], ['desc'])
+}
+
+export default {
+  getComments,
+  getProfessionOptions,
+  getQualityOptions,
+  getUser,
+  updateUser,
+  getUsersOptions
 }

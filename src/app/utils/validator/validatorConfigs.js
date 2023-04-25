@@ -80,5 +80,17 @@ export const editUserValidatorConfig = {
       message: 'Name is required'
     }
   }
+}
 
+export const commentValidatorConfig = {
+  user: {
+    isRequired: {
+      message: 'User field is required'
+    }
+  },
+  comment: {
+    isRequired: {
+      message: 'Comment field is required'
+    }
+  }
 }

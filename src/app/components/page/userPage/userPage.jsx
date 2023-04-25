@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react'
-import { useHistory, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import api from '../../../api'
 import { Spinner } from '../../ui/Spinner'
-import { QualitiesList } from '../../ui/qualities/qualitiesList'
+import { UserCard } from '../../ui/user/userCard'
+import Comments from '../../ui/comments'
+import { QualitiesCard } from '../../ui/user/qualitiesCard'
+import { MeetingsCard } from '../../ui/user/meetingsCard'
 
-const UserPage = () => {
+export const UserPage = () => {
   const { userId } = useParams()
-  const history = useHistory()
   const [user, setUser] = useState()
 
   useEffect(() => {
@@ -15,15 +17,17 @@ const UserPage = () => {
 
   if (!user) return <Spinner />
   return (
-    <div className="border mx-5 p-3 mt-4">
-      <h1>{user.name}</h1>
-      <h2>Профессия: {user.profession.name}</h2>
-      <QualitiesList qualities={user.qualities} />
-      <p className="mt-2">Встретился, раз: {user.completedMeetings}</p>
-      <h2>Rate: {user.rate}</h2>
-      <button onClick={() => history.push(`/users/${userId}/edit`)}>Edit</button>
+    <div className="container">
+      <div className="row gutters-sm">
+        <div className="col-md-4 mb-3">
+          <UserCard user={user} />
+          <QualitiesCard qualities={user.qualities} />
+          <MeetingsCard completedMeetings={user.completedMeetings} />
+        </div>
+        <div className="col-md-8">
+          <Comments />
+        </div>
+      </div>
     </div>
   )
 }
-
-export { UserPage }
