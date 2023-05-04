@@ -5,17 +5,20 @@ import { LoginLayout } from './layouts/loginLayout'
 import { UserLayout } from './layouts/userLayout'
 import { ToastContainer } from 'react-toastify'
 import { ProfessionProvider } from './hooks/useProfession'
+import { QualitiesProvider } from './hooks/useQualities'
 
 export const App = () => {
   return (
     <>
       <Navbar />
       <ProfessionProvider>
-        <Switch>
-          <Route exact path="/" component={MainLayout} />
-          <Route path="/login/:type?" component={LoginLayout} />
-          <Route path="/users/:userId?/:mode?" component={UserLayout} />
-        </Switch>
+        <QualitiesProvider>
+          <Switch>
+            <Route exact path="/" component={MainLayout} />
+            <Route path="/login/:type?" component={LoginLayout} />
+            <Route path="/users/:userId?/:mode?" component={UserLayout} />
+          </Switch>
+        </QualitiesProvider>
       </ProfessionProvider>
       <ToastContainer />
     </>
