@@ -7,9 +7,10 @@ import { SearchStatus } from '../../ui/searchStatus'
 import { UsersTable } from '../../ui/usersTable'
 import _ from 'lodash'
 import { Spinner } from '../../ui/Spinner'
+import { useUser } from '../../../hooks/useUsers'
 
 export const UsersListPage = () => {
-  const [users, setUsers] = useState()
+  const { users } = useUser()
   const [currentPage, setCurrentPage] = useState(1)
   const [professions, setProfessions] = useState()
   const [selectedProf, setSelectedProf] = useState()
@@ -18,7 +19,6 @@ export const UsersListPage = () => {
   const pageSize = 8
 
   useEffect(() => {
-    api.users.fetchAll().then(response => setUsers(response))
     api.professions.fetchAll().then((professions) => setProfessions(professions))
   }, [])
 
@@ -27,7 +27,7 @@ export const UsersListPage = () => {
   }, [selectedProf])
 
   const handleDelete = (id) => {
-    setUsers((prev) => prev?.filter((user) => user._id !== id))
+    // setUsers((prev) => prev?.filter((user) => user._id !== id))
   }
 
   const handleToggleBookmark = (userId) => {
@@ -35,7 +35,7 @@ export const UsersListPage = () => {
       if (user._id === userId) user.bookmark = !user.bookmark
       return user
     })
-    setUsers(uploadUsers)
+    // setUsers(uploadUsers)
   }
 
   const handlePageChange = (pageIndex) => {
