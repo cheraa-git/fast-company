@@ -3,6 +3,7 @@ import { Navbar } from './components/ui/navbar'
 import { MainLayout } from './layouts/mainLayout'
 import { LoginLayout } from './layouts/loginLayout'
 import { UserLayout } from './layouts/userLayout'
+import { ToastContainer } from 'react-toastify'
 
 export const App = () => {
   return (
@@ -13,6 +14,7 @@ export const App = () => {
         <Route path="/login/:type?" component={LoginLayout} />
         <Route path="/users/:userId?/:mode?" component={UserLayout} />
       </Switch>
+      <ToastContainer />
     </>
   )
 }
