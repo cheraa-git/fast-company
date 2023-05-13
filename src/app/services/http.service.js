@@ -10,7 +10,6 @@ request.interceptors.request.use(config => {
   if (configFile.isFirebase) {
     config.url = config.url.replace(/\/$/g, '') + '.json'
   }
-  console.log(config.url)
   return config
 }, error => {
   return Promise.reject(error)
