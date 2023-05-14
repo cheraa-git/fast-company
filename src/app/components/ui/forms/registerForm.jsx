@@ -9,9 +9,11 @@ import { registerValidatorConfig } from '../../../utils/validator/validatorConfi
 import { useQualities } from '../../../hooks/useQualities'
 import { useProfessions } from '../../../hooks/useProfession'
 import { useAuth } from '../../../hooks/useAuth'
+import { useHistory } from 'react-router-dom'
 
 
 export const RegisterForm = () => {
+  const history = useHistory()
   const { signUp } = useAuth()
   const { qualities } = useQualities()
   const { professions } = useProfessions()
@@ -41,13 +43,18 @@ export const RegisterForm = () => {
     return Object.keys(errors).length === 0
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     const isValid = validate()
     if (!isValid) return
     const newData = { ...data, qualities: data.qualities.map(q => q.value) }
     console.log(newData)
-    signUp(newData)
+    try {
+      await signUp(newData)
+      history.push('/')
+    } catch (error) {
+      setErrors(error)
+    }
   }
 
 
