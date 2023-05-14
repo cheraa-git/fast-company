@@ -17,7 +17,6 @@ const EXPIRES_KEY = 'jwt-expires'
 const AuthProvider = ({ children }) => {
   const [currentUser, setUser] = useState({})
   const [error, setError] = useState(null)
-
   useEffect(() => {
     if (error !== null) {
       toast.error(error)
@@ -31,8 +30,7 @@ const AuthProvider = ({ children }) => {
     localStorage.setItem(EXPIRES_KEY, expiresDate)
   }
   const signUp = async ({ email, password, ...rest }) => {
-    const key = 'AIzaSyCq0F-KgvFVF_J0h4mnwp6imjqPZDhydnU'
-    const url = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${key}`
+    const url = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${process.env.REACT_APP_FIREBASE_KEY}`
     try {
       const { data } = await httpAuth.post(url, { email, password, returnSecureToken: true })
       setTokens(data)
