@@ -8,9 +8,11 @@ import { CheckBoxField } from '../../common/form/checkBoxField'
 import { registerValidatorConfig } from '../../../utils/validator/validatorConfigs'
 import { useQualities } from '../../../hooks/useQualities'
 import { useProfessions } from '../../../hooks/useProfession'
+import { useAuth } from '../../../hooks/useAuth'
 
 
 export const RegisterForm = () => {
+  const { signUp } = useAuth()
   const { qualities } = useQualities()
   const { professions } = useProfessions()
   const qualitiesList = qualities.map(q => ({ label: q.name, value: q._id }))
@@ -45,6 +47,7 @@ export const RegisterForm = () => {
     if (!isValid) return
     const newData = { ...data, qualities: data.qualities.map(q => q.value) }
     console.log(newData)
+    signUp(newData)
   }
 
 
