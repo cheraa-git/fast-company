@@ -1,12 +1,30 @@
 import axios from 'axios'
 import { toast } from 'react-toastify'
-import config from '../config.json'
+import configFile from '../config.json'
 
 const request = axios.create({
-  baseURL: config.API_ENDPOINT
+  baseURL: configFile.API_ENDPOINT
 })
 
-request.interceptors.response.use(res => res, error => {
+request.interceptors.request.use(config => {
+  if (configFile.isFirebase) {
+    config.url = config.url.replace(/\/$/g, '') + '.json'
+  }
+  return config
+}, error => {
+  return Promise.reject(error)
+})
+
+const transformData = (data) => {
+  return data ? Object.values(data) : []
+}
+
+request.interceptors.response.use(res => {
+  if (configFile.isFirebase) {
+    res.data = { content: transformData(res.data) }
+  }
+  return res
+}, error => {
   const expectedErrors = error.response && error.response.status >= 400 && error.response.status < 500
   if (!expectedErrors) {
     console.log(error)
