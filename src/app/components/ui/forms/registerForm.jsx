@@ -6,10 +6,19 @@ import { RadioField } from '../../common/form/radioField'
 import { MultiSelectField } from '../../common/form/multiSelectField'
 import { CheckBoxField } from '../../common/form/checkBoxField'
 import { registerValidatorConfig } from '../../../utils/validator/validatorConfigs'
-import query from '../../../utils/query'
+import { useQualities } from '../../../hooks/useQualities'
+import { useProfessions } from '../../../hooks/useProfession'
+import { useAuth } from '../../../hooks/useAuth'
+import { useHistory } from 'react-router-dom'
 
 
 export const RegisterForm = () => {
+  const history = useHistory()
+  const { signUp } = useAuth()
+  const { qualities } = useQualities()
+  const { professions } = useProfessions()
+  const qualitiesList = qualities.map(q => ({ label: q.name, value: q._id }))
+  const professionsList = professions.map(p => ({ label: p.name, value: p._id }))
   const [data, setData] = useState({
     email: '',
     password: '',
@@ -19,13 +28,6 @@ export const RegisterForm = () => {
     license: false
   })
   const [errors, setErrors] = useState({})
-  const [professions, setProfessions] = useState([])
-  const [qualities, setQualities] = useState([])
-
-  useEffect(() => {
-    query.getProfessionOptions().then(professions => setProfessions(professions))
-    query.getQualityOptions().then(qualities => setQualities(qualities))
-  }, [])
 
   const handleChange = (target) => {
     setData(prev => ({ ...prev, [target.name]: target.value }))
@@ -41,12 +43,19 @@ export const RegisterForm = () => {
     return Object.keys(errors).length === 0
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     const isValid = validate()
     if (!isValid) return
-    console.log(data)
+    const newData = { ...data, qualities: data.qualities.map(q => q.value) }
+    try {
+      await signUp(newData)
+      history.push('/')
+    } catch (error) {
+      setErrors(error)
+    }
   }
+
 
   const isValid = Object.keys(errors).length === 0
   return (
@@ -70,7 +79,7 @@ export const RegisterForm = () => {
         name="profession"
         value={data.profession}
         onChange={handleChange}
-        options={professions}
+        options={professionsList}
         error={errors.profession}
         label="Choose your profession"
         defaultOption="Choose..."
@@ -87,7 +96,7 @@ export const RegisterForm = () => {
         label="Choose your sex"
       />
       <MultiSelectField
-        options={qualities}
+        options={qualitiesList}
         onChange={handleChange}
         name="qualities"
         label="Choose your qualities"

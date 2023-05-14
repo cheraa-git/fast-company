@@ -35,6 +35,7 @@ export const UsersListPage = () => {
       if (user._id === userId) user.bookmark = !user.bookmark
       return user
     })
+    console.log(uploadUsers)
     // setUsers(uploadUsers)
   }
 
