@@ -64,17 +64,15 @@ const AuthProvider = ({ children }) => {
     } catch (error) {
       errorCatcher(error)
       const { code, message } = error.response.data.error
-      const errorObject = {}
+      console.log(message)
       if (code === 400) {
-        if (message === 'EMAIL_NOT_FOUND') {
-          errorObject.email = 'Неверный Email'
-          throw errorObject
-        }
-        if (message === 'INVALID_PASSWORD') {
-          errorObject.password = 'Неверный пароль'
-          throw errorObject
+        if (message === 'EMAIL_NOT_FOUND' || message === 'INVALID_PASSWORD') {
+          throw new Error('Неверный Email или пароль')
+        } else {
+          throw new Error('Слишком много попыток. Попробуйте позже')
         }
       }
+      throw new Error('Неизвестная ошибка. Попробуйте позже')
     }
   }
 

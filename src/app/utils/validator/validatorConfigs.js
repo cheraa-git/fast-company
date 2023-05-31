@@ -2,24 +2,11 @@ export const loginValidatorConfig = {
   email: {
     isRequired: {
       message: 'Email is required'
-    },
-    isEmail: {
-      message: 'Invalid email'
     }
   },
   password: {
     isRequired: {
       message: 'Password is required'
-    },
-    isCapitalSymbol: {
-      message: 'The password must contain at least one uppercase character'
-    },
-    isContainDigit: {
-      message: 'The password must contain at least one digit'
-    },
-    min: {
-      message: 'The min password length is 8',
-      value: 8
     }
   }
 }

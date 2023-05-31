@@ -11,6 +11,7 @@ export const LoginForm = () => {
   const { signIn } = useAuth()
   const [data, setData] = useState({ email: '', password: '', stayOn: false })
   const [errors, setErrors] = useState({})
+  const [enterError, setEnterError] = useState(null)
 
   useEffect(() => {
     validate()
@@ -18,6 +19,7 @@ export const LoginForm = () => {
 
   const handleChange = (target) => {
     setData(prev => ({ ...prev, [target.name]: target.value }))
+    setEnterError(null)
   }
 
   const validate = () => {
@@ -34,7 +36,7 @@ export const LoginForm = () => {
       await signIn(data)
       history.push('/')
     } catch (error) {
-      setErrors(error)
+      setEnterError(error.message)
     }
   }
 
@@ -59,7 +61,8 @@ export const LoginForm = () => {
       <CheckBoxField value={data.stayOn} onChange={handleChange} name="stayOn">
         Stay logged in
       </CheckBoxField>
-      <button className="btn btn-primary w-100 mx-auto" disabled={!isValid}>Submit</button>
+      <p className="text-danger">{enterError}</p>
+      <button className="btn btn-primary w-100 mx-auto" disabled={!isValid || !!enterError}>Submit</button>
     </form>
   )
 }
