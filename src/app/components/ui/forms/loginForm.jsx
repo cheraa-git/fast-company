@@ -16,7 +16,6 @@ export const LoginForm = () => {
   useEffect(() => {
     validate()
   }, [data])
-
   const handleChange = (target) => {
     setData(prev => ({ ...prev, [target.name]: target.value }))
     setEnterError(null)
@@ -34,7 +33,7 @@ export const LoginForm = () => {
     if (!isValid) return
     try {
       await signIn(data)
-      history.push('/')
+      history.push(history.location.state?.from?.pathname || '/')
     } catch (error) {
       setEnterError(error.message)
     }

@@ -6,18 +6,14 @@ import Qualities from './qualities'
 import { Profession } from './Profession'
 
 
-export const UsersTable = ({ users, onSort, selectedSort, onDelete, onToggleBookmark }) => {
+export const UsersTable = ({ users, onSort, selectedSort, onToggleBookmark }) => {
   const columns = {
     name: { path: 'name', name: 'Имя', component: user => <Link to={`/users/${user._id}`}>{user.name}</Link> },
     qualities: { name: 'Качество', component: (user) => <Qualities qualities={user.qualities} /> },
-    professions: { name: 'Профессия', component: (user) => <Profession id={user.profession}/> },
+    professions: { name: 'Профессия', component: (user) => <Profession id={user.profession} /> },
     completedMeetings: { path: 'completedMeetings', name: 'Встретился, раз' },
     rate: { path: 'rate', name: 'Оценка' },
-    bookmark: { path: 'bookmark', name: 'Избранное', component: user => <Bookmark {...{ user, onToggleBookmark }} /> },
-    delete: {
-      component: (user) => (
-        <button className="btn btn-danger btn-sm m-2" onClick={() => onDelete(user._id)}>delete</button>)
-    }
+    bookmark: { path: 'bookmark', name: 'Избранное', component: user => <Bookmark {...{ user, onToggleBookmark }} /> }
   }
 
   return (
@@ -29,7 +25,6 @@ UsersTable.propTypes = {
   users: PropTypes.array.isRequired,
   onSort: PropTypes.func.isRequired,
   selectedSort: PropTypes.object.isRequired,
-  onDelete: PropTypes.func.isRequired,
   onToggleBookmark: PropTypes.func.isRequired
 }
 

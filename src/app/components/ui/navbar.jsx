@@ -1,7 +1,10 @@
 import { Link, useLocation } from 'react-router-dom'
+import { useAuth } from '../../hooks/useAuth'
+import { NavProfile } from './navProfile'
 
 export const Navbar = () => {
   const location = useLocation()
+  const { currentUser } = useAuth()
 
   const getLinkClass = (path) => {
     if (path === location.pathname) return 'nav-link disabled'
@@ -9,16 +12,23 @@ export const Navbar = () => {
   }
 
   return (
-    <ul className="nav">
-      <li className="nav-item">
-        <Link to="/" className={getLinkClass('/')}>Main</Link>
-      </li>
-      <li className="nav-item">
-        <Link to="/login" className={getLinkClass('/login')}>Login</Link>
-      </li>
-      <li className="nav-item">
-        <Link to="/users" className={getLinkClass('/users')}>Users</Link>
-      </li>
-    </ul>
+    <nav className="navbar nav bg-light mb-3">
+      <div className="container-fluid">
+
+        <div className="d-flex">
+          <Link to="/" className={getLinkClass('/')}>Main</Link>
+
+          {currentUser && <Link to="/users" className={getLinkClass('/users')}>Users</Link>}
+        </div>
+
+        {
+          currentUser
+            ? <NavProfile />
+            : <Link to="/login" className={getLinkClass('/login')}>Login</Link>
+
+        }
+
+      </div>
+    </nav>
   )
 }

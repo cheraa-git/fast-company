@@ -20,6 +20,15 @@ export const registerValidatorConfig = {
       message: 'Invalid email'
     }
   },
+  name: {
+    isRequired: {
+      message: 'Name is required'
+    },
+    min: {
+      message: 'The min name length is 3',
+      value: 3
+    }
+  },
   password: {
     isRequired: {
       message: 'Password is required'
@@ -70,11 +79,6 @@ export const editUserValidatorConfig = {
 }
 
 export const commentValidatorConfig = {
-  user: {
-    isRequired: {
-      message: 'User field is required'
-    }
-  },
   comment: {
     isRequired: {
       message: 'Comment field is required'

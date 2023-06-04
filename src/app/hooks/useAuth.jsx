@@ -4,8 +4,11 @@ import axios from 'axios'
 import userService from '../services/user.service'
 import { toast } from 'react-toastify'
 import localStorageService from '../services/localStorage.service'
+import { Spinner } from '../components/ui/Spinner'
+import { useHistory } from 'react-router-dom'
+import { getRandomAvatar } from '../utils/randomAvatar'
 
-const httpAuth = axios.create({
+export const httpAuth = axios.create({
   baseURL: 'https://identitytoolkit.googleapis.com/v1',
   params: { key: process.env.REACT_APP_FIREBASE_KEY }
 })
@@ -17,8 +20,10 @@ export const useAuth = () => {
 }
 
 const AuthProvider = ({ children }) => {
-  const [currentUser, setUser] = useState({})
+  const history = useHistory()
+  const [currentUser, setUser] = useState()
   const [error, setError] = useState(null)
+  const [isLoading, setLoading] = useState(true)
 
   useEffect(() => {
     if (error !== null) {
@@ -27,12 +32,39 @@ const AuthProvider = ({ children }) => {
     }
   }, [error])
 
+  useEffect(() => {
+    if (localStorageService.getAccessToken()) getUserData()
+    else setLoading(false)
+  }, [])
+
+  async function getUserData() {
+    try {
+      const { content } = await userService.getCurrentUser()
+      setUser(content)
+    } catch (error) {
+      errorCatcher(error)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  function randomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1) + min)
+  }
+
   const signUp = async ({ email, password, ...rest }) => {
     const url = '/accounts:signUp'
     try {
       const { data } = await httpAuth.post(url, { email, password, returnSecureToken: true })
       localStorageService.setTokens(data)
-      await createUser({ _id: data.localId, email, ...rest })
+      await createUser({
+        _id: data.localId,
+        email,
+        rate: randomInt(1, 5),
+        completedMeetings: randomInt(0, 200),
+        image: getRandomAvatar(),
+        ...rest
+      })
     } catch (error) {
       errorCatcher(error)
       const { code, message } = error.response.data.error
@@ -50,6 +82,7 @@ const AuthProvider = ({ children }) => {
   const createUser = async (data) => {
     try {
       const { content } = await userService.create(data)
+      console.log(content)
       setUser(content)
     } catch (error) {
       errorCatcher(error)
@@ -61,6 +94,7 @@ const AuthProvider = ({ children }) => {
     try {
       const { data } = await httpAuth.post(url, { email, password, returnSecureToken: true })
       localStorageService.setTokens(data)
+      await getUserData()
     } catch (error) {
       errorCatcher(error)
       const { code, message } = error.response.data.error
@@ -76,14 +110,20 @@ const AuthProvider = ({ children }) => {
     }
   }
 
+  const logOut = () => {
+    localStorageService.removeAuthData()
+    setUser(null)
+    history.push('/')
+  }
+
   const errorCatcher = (e) => {
     const { message } = e.response.data
     setError(message)
   }
 
   return (
-    <AuthContext.Provider value={{ signUp, currentUser, signIn }}>
-      {children}
+    <AuthContext.Provider value={{ signUp, currentUser, signIn, logOut }}>
+      {!isLoading ? children : <Spinner />}
     </AuthContext.Provider>
   )
 }

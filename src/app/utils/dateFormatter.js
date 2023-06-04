@@ -8,6 +8,6 @@ export const dateFormatter = (timestamp) => {
   if (now.getTime() - date.getTime() > 1000 * 60 * 10) return '30 минут назад'
   if (now.getTime() - date.getTime() > 1000 * 60 * 5) return '10 минут назад'
   if (now.getTime() - date.getTime() > 1000 * 60) return '5 минут назад'
-  if (now.getTime() - date.getTime() < 1000 * 60) return '1 минут назад'
+  if (now.getTime() - date.getTime() < 1000 * 60) return '1 минуту назад'
   return new Date(date).toDateString()
 }

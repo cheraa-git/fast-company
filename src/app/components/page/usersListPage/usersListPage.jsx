@@ -1,34 +1,30 @@
 import { useEffect, useState } from 'react'
 import { Pagination } from '../../common/pagination'
 import { paginate } from '../../../utils/paginate'
-import api from '../../../api'
 import { GroupList } from '../../common/groupList'
 import { SearchStatus } from '../../ui/searchStatus'
 import { UsersTable } from '../../ui/usersTable'
 import _ from 'lodash'
 import { Spinner } from '../../ui/Spinner'
 import { useUser } from '../../../hooks/useUsers'
+import { useProfessions } from '../../../hooks/useProfession'
+import { useAuth } from '../../../hooks/useAuth'
 
 export const UsersListPage = () => {
   const { users } = useUser()
+  const { currentUser } = useAuth()
+  const { professions, isLoading: professionsLoading } = useProfessions()
   const [currentPage, setCurrentPage] = useState(1)
-  const [professions, setProfessions] = useState()
   const [selectedProf, setSelectedProf] = useState()
   const [sortBy, setSortBy] = useState({ path: 'name', order: 'asc' })
   const [searchValue, setSearchValue] = useState('')
   const pageSize = 8
 
-  useEffect(() => {
-    api.professions.fetchAll().then((professions) => setProfessions(professions))
-  }, [])
 
   useEffect(() => {
     setCurrentPage(1)
   }, [selectedProf])
 
-  const handleDelete = (id) => {
-    // setUsers((prev) => prev?.filter((user) => user._id !== id))
-  }
 
   const handleToggleBookmark = (userId) => {
     const uploadUsers = users?.map((user) => {
@@ -57,26 +53,27 @@ export const UsersListPage = () => {
     clearFilter()
   }
 
-  const getFilteredUsers = () => {
+  const getFilteredUsers = (data) => {
+    data = [...data].filter(u => u._id !== currentUser._id)
     if (selectedProf) {
-      return users.filter(user => user.profession._id === selectedProf._id)
+      return data.filter(user => user.profession._id === selectedProf._id)
     }
     if (searchValue) {
-      return users.filter(user => user.name.toLowerCase().includes(searchValue.toLowerCase()))
+      return data.filter(user => user.name.toLowerCase().includes(searchValue.toLowerCase()))
     }
-    return users
+    return data
   }
 
   if (!users) return <Spinner />
 
-  const filteredUsers = getFilteredUsers()
+  const filteredUsers = getFilteredUsers(users)
   const count = filteredUsers.length
   const sortedUsers = _.orderBy(filteredUsers, [sortBy.path], [sortBy.order])
   const userCrop = paginate(sortedUsers, currentPage, pageSize)
 
   return (
     <div className="d-flex">
-      {professions && (
+      {professions && !professionsLoading && (
         <div className="d-flex flex-column flex-shrink-0 p-3">
           <GroupList
             items={professions}
@@ -102,7 +99,6 @@ export const UsersListPage = () => {
             users={userCrop}
             selectedSort={sortBy}
             onSort={setSortBy}
-            onDelete={handleDelete}
             onToggleBookmark={handleToggleBookmark}
           />
         }

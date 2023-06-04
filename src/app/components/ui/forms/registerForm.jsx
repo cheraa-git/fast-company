@@ -22,6 +22,7 @@ export const RegisterForm = () => {
   const [data, setData] = useState({
     email: '',
     password: '',
+    name: '',
     profession: '',
     sex: 'male',
     qualities: [],
@@ -66,6 +67,13 @@ export const RegisterForm = () => {
         value={data.email}
         onChange={handleChange}
         error={errors.email}
+      />
+      <TextField
+        label="Name"
+        name="name"
+        value={data.name}
+        onChange={handleChange}
+        error={errors.name}
       />
       <TextField
         label="Password"

@@ -1,19 +1,17 @@
-import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import api from '../../../api'
 import { Spinner } from '../../ui/Spinner'
 import { UserCard } from '../../ui/user/userCard'
 import Comments from '../../ui/comments'
 import { QualitiesCard } from '../../ui/user/qualitiesCard'
 import { MeetingsCard } from '../../ui/user/meetingsCard'
+import { useUser } from '../../../hooks/useUsers'
+import { CommentsProvider } from '../../../hooks/useComments'
 
 export const UserPage = () => {
   const { userId } = useParams()
-  const [user, setUser] = useState()
+  const { getUserById } = useUser()
+  const user = getUserById(userId)
 
-  useEffect(() => {
-    api.users.getById(userId).then(response => setUser(response))
-  }, [])
 
   if (!user) return <Spinner />
   return (
@@ -25,7 +23,9 @@ export const UserPage = () => {
           <MeetingsCard completedMeetings={user.completedMeetings} />
         </div>
         <div className="col-md-8">
-          <Comments />
+          <CommentsProvider>
+            <Comments />
+          </CommentsProvider>
         </div>
       </div>
     </div>

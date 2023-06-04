@@ -17,5 +17,5 @@ export const QualitiesCard = ({ qualities }) => {
 }
 
 QualitiesCard.propTypes = {
-  qualities: PropTypes.arrayOf(PropTypes.object).isRequired
+  qualities: PropTypes.arrayOf(PropTypes.string).isRequired
 }
