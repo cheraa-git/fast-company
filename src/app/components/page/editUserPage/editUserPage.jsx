@@ -1,23 +1,35 @@
 import { EditUserForm } from '../../ui/forms/editUserForm'
-import { useEffect, useState } from 'react'
 import { Spinner } from '../../ui/Spinner'
-import PropTypes from 'prop-types'
-import { useHistory } from 'react-router-dom'
-import query from '../../../utils/query'
+import { useHistory, useParams } from 'react-router-dom'
+import { useProfessions } from '../../../hooks/useProfession'
+import { useQualities } from '../../../hooks/useQualities'
+import { useAuth } from '../../../hooks/useAuth'
+import { useEffect } from 'react'
 
-export const EditUserPage = ({ userId }) => {
+export const EditUserPage = () => {
   const history = useHistory()
-  const [user, setUser] = useState()
-  const [professions, setProfessions] = useState()
-  const [qualities, setQualities] = useState()
+  const { userId } = useParams()
+  const { currentUser, updateUser } = useAuth()
+  const { professions, isLoading: professionsLoading } = useProfessions()
+  const { qualities, isLoading: qualitiesLoading } = useQualities()
+  const qualitiesList = qualities.map(q => ({ label: q.name, value: q._id }))
+  const professionsList = professions.map(p => ({ label: p.name, value: p._id }))
+  const user = {
+    ...currentUser,
+    qualities: currentUser.qualities.map(qId => qualitiesList.find(qOption => qOption.value === qId))
+  }
 
   useEffect(() => {
-    query.getProfessionOptions().then(professions => setProfessions(professions))
-    query.getQualityOptions().then(qualities => setQualities(qualities))
-    query.getUser(userId).then(user => setUser(user))
-  }, [])
+    if (userId !== currentUser._id) history.push(`/users/${currentUser._id}/edit`)
+  }, [userId])
 
-  if (!user || !professions || !qualities) return <Spinner />
+  const handleSubmit = async (data) => {
+    await updateUser({ ...data, qualities: data.qualities.map(q => q.value) })
+    history.push(`/users/${userId}`)
+  }
+
+
+  if (professionsLoading || qualitiesLoading) return <Spinner />
   return (
     <div className="container mt-5">
       <button className="btn btn-primary" onClick={() => history.push(`/users/${userId}`)}>
@@ -26,13 +38,9 @@ export const EditUserPage = ({ userId }) => {
       </button>
       <div className="row">
         <div className="col-md-6 offset-md-3 shadow p-4">
-          <EditUserForm user={user} professions={professions} qualities={qualities} />
+          <EditUserForm user={user} professions={professionsList} qualities={qualitiesList} onSubmit={handleSubmit} />
         </div>
       </div>
     </div>
   )
-}
-
-EditUserPage.propTypes = {
-  userId: PropTypes.string
 }

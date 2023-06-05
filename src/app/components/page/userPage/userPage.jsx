@@ -6,11 +6,13 @@ import { QualitiesCard } from '../../ui/user/qualitiesCard'
 import { MeetingsCard } from '../../ui/user/meetingsCard'
 import { useUser } from '../../../hooks/useUsers'
 import { CommentsProvider } from '../../../hooks/useComments'
+import { useAuth } from '../../../hooks/useAuth'
 
 export const UserPage = () => {
   const { userId } = useParams()
   const { getUserById } = useUser()
-  const user = getUserById(userId)
+  const { currentUser } = useAuth()
+  const user = userId === currentUser._id ? currentUser : getUserById(userId)
 
 
   if (!user) return <Spinner />

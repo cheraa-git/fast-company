@@ -6,15 +6,12 @@ import { useEffect, useState } from 'react'
 import { validator } from '../../../utils/validator/validator'
 import { editUserValidatorConfig } from '../../../utils/validator/validatorConfigs'
 import PropTypes from 'prop-types'
-import { useHistory } from 'react-router-dom'
-import query from '../../../utils/query'
 
-export const EditUserForm = ({ user, professions, qualities }) => {
-  const history = useHistory()
+export const EditUserForm = ({ user, professions, qualities, onSubmit }) => {
   const [data, setData] = useState({
     email: user.email,
     name: user.name,
-    profession: user.profession._id,
+    profession: user.profession,
     sex: user.sex,
     qualities: user.qualities
   })
@@ -34,20 +31,11 @@ export const EditUserForm = ({ user, professions, qualities }) => {
     return Object.keys(errors).length === 0
   }
 
-  const getProfessionById = (id) => {
-    for (const prof of professions) {
-      if (prof.value === id) {
-        return { _id: prof.value, name: prof.label }
-      }
-    }
-  }
-
   const handleSubmit = (e) => {
     e.preventDefault()
     const isValid = validate()
     if (!isValid) return
-    query.updateUser(user._id, { ...data, profession: getProfessionById(data.profession) })
-      .then((updatedUser) => history.push(`/users/${updatedUser._id}`))
+    onSubmit(data)
   }
 
   const isValid = Object.keys(errors).length === 0
@@ -102,5 +90,6 @@ export const EditUserForm = ({ user, professions, qualities }) => {
 EditUserForm.propTypes = {
   user: PropTypes.object,
   qualities: PropTypes.array,
-  professions: PropTypes.array
+  professions: PropTypes.array,
+  onSubmit: PropTypes.func
 }

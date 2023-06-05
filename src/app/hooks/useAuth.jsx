@@ -82,7 +82,6 @@ const AuthProvider = ({ children }) => {
   const createUser = async (data) => {
     try {
       const { content } = await userService.create(data)
-      console.log(content)
       setUser(content)
     } catch (error) {
       errorCatcher(error)
@@ -110,6 +109,35 @@ const AuthProvider = ({ children }) => {
     }
   }
 
+  const updateUser = async (data) => {
+    const url = '/accounts:update'
+    try {
+      if (data.email && data.email !== currentUser?.email) {
+        await httpAuth.post(url, { idToken: localStorageService.getAccessToken(), email: data.email })
+      }
+      const { content } = await userService.update({ ...currentUser, ...data })
+      setUser(content)
+    } catch (error) {
+      console.log(error)
+      errorCatcher(error)
+      const { code, message } = error.response.data.error
+      const errorObject = {}
+      if (code === 400) {
+        if (message === 'EMAIL_EXISTS') {
+          errorObject.email = 'Пользователь с таким Email уже существует'
+          throw errorObject
+        }
+        if (message === 'CREDENTIAL_TOO_OLD_LOGIN_AGAIN') {
+          if (window.confirm('To update your email address, you need to log in again. Continue?')) {
+            logOut()
+            history.push('/login')
+          }
+        }
+      }
+      throw new Error('Неизвестная ошибка. Попробуйте позже')
+    }
+  }
+
   const logOut = () => {
     localStorageService.removeAuthData()
     setUser(null)
@@ -122,7 +150,7 @@ const AuthProvider = ({ children }) => {
   }
 
   return (
-    <AuthContext.Provider value={{ signUp, currentUser, signIn, logOut }}>
+    <AuthContext.Provider value={{ signUp, currentUser, signIn, logOut, updateUser }}>
       {!isLoading ? children : <Spinner />}
     </AuthContext.Provider>
   )

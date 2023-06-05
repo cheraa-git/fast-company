@@ -6,12 +6,12 @@ import { UserProvider } from '../hooks/useUsers'
 
 
 export const UserLayout = () => {
-  const { userId, edit } = useParams()
+  const { userId, mode } = useParams()
   return (
     <UserProvider>
       {
         userId
-          ? edit ? <EditUserPage userId={userId} /> : <UserPage />
+          ? mode === 'edit' ? <EditUserPage userId={userId} /> : <UserPage />
           : <UsersListPage />
       }
     </UserProvider>
