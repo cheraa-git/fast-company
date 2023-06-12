@@ -4,7 +4,7 @@ import axios from 'axios'
 import userService from '../services/user.service'
 import { toast } from 'react-toastify'
 import localStorageService from '../services/localStorage.service'
-import { Spinner } from '../components/ui/Spinner'
+import { Spinner } from '../components/ui/spinner'
 import { useHistory } from 'react-router-dom'
 import { getRandomAvatar } from '../utils/randomAvatar'
 

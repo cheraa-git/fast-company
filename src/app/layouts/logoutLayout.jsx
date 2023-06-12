@@ -1,6 +1,6 @@
 import { useAuth } from '../hooks/useAuth'
 import { useEffect } from 'react'
-import { Spinner } from '../components/ui/Spinner'
+import { Spinner } from '../components/ui/spinner'
 
 export const LogoutLayout = () => {
   const { logOut } = useAuth()

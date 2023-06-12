@@ -1,17 +1,18 @@
 import { EditUserForm } from '../../ui/forms/editUserForm'
-import { Spinner } from '../../ui/Spinner'
+import { Spinner } from '../../ui/spinner'
 import { useHistory, useParams } from 'react-router-dom'
-import { useProfessions } from '../../../hooks/useProfession'
 import { useAuth } from '../../../hooks/useAuth'
 import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { getQualities, getQualitiesLoadingStatus } from '../../../store/qualities'
+import { getProfessions, getProfessionsLoading } from '../../../store/professions'
 
 export const EditUserPage = () => {
   const history = useHistory()
   const { userId } = useParams()
   const { currentUser, updateUser } = useAuth()
-  const { professions, isLoading: professionsLoading } = useProfessions()
+  const professions = useSelector(getProfessions())
+  const professionsLoading = useSelector(getProfessionsLoading())
   const qualities = useSelector(getQualities())
   const qualitiesLoading = useSelector(getQualitiesLoadingStatus())
   const qualitiesList = qualities.map(q => ({ label: q.name, value: q._id }))

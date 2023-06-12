@@ -5,15 +5,17 @@ import { GroupList } from '../../common/groupList'
 import { SearchStatus } from '../../ui/searchStatus'
 import { UsersTable } from '../../ui/usersTable'
 import _ from 'lodash'
-import { Spinner } from '../../ui/Spinner'
+import { Spinner } from '../../ui/spinner'
 import { useUser } from '../../../hooks/useUsers'
-import { useProfessions } from '../../../hooks/useProfession'
 import { useAuth } from '../../../hooks/useAuth'
+import { useSelector } from 'react-redux'
+import { getProfessions, getProfessionsLoading } from '../../../store/professions'
 
 export const UsersListPage = () => {
   const { users } = useUser()
   const { currentUser } = useAuth()
-  const { professions, isLoading: professionsLoading } = useProfessions()
+  const professions = useSelector(getProfessions())
+  const professionsLoading = useSelector(getProfessionsLoading())
   const [currentPage, setCurrentPage] = useState(1)
   const [selectedProf, setSelectedProf] = useState()
   const [sortBy, setSortBy] = useState({ path: 'name', order: 'asc' })
@@ -56,7 +58,7 @@ export const UsersListPage = () => {
   const getFilteredUsers = (data) => {
     data = [...data].filter(u => u._id !== currentUser._id)
     if (selectedProf) {
-      return data.filter(user => user.profession._id === selectedProf._id)
+      return data.filter(user => user.profession === selectedProf._id)
     }
     if (searchValue) {
       return data.filter(user => user.name.toLowerCase().includes(searchValue.toLowerCase()))

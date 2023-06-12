@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import Table from '../common/table'
 import Qualities from './qualities'
-import { Profession } from './Profession'
+import { Profession } from './profession'
 
 
 export const UsersTable = ({ users, onSort, selectedSort, onToggleBookmark }) => {

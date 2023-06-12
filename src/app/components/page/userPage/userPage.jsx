@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom'
-import { Spinner } from '../../ui/Spinner'
+import { Spinner } from '../../ui/spinner'
 import { UserCard } from '../../ui/user/userCard'
 import Comments from '../../ui/comments'
 import { QualitiesCard } from '../../ui/user/qualitiesCard'
