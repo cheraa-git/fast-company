@@ -1,12 +1,6 @@
 import PropTypes from 'prop-types'
-import { useQualities } from '../../../hooks/useQualities'
-import { Spinner } from '../Spinner'
 
-export const Quality = ({ id }) => {
-  const { getQuality, isLoading } = useQualities()
-  const quality = getQuality(id)
-
-  if (isLoading) return <Spinner />
+export const Quality = ({ quality }) => {
   return (
     <span key={quality._id} className={`badge bg-${quality.color} mx-1`}>
       {quality.name}
@@ -15,5 +9,5 @@ export const Quality = ({ id }) => {
 }
 
 Quality.propTypes = {
-  id: PropTypes.string
+  quality: PropTypes.object
 }
