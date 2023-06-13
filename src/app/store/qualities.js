@@ -27,13 +27,13 @@ const qualitiesSlice = createSlice({
 })
 
 const { qualitiesReceived, qualitiesRequested, qualitiesRequestFailed } = qualitiesSlice.actions
-const qualitiesReducer = qualitiesSlice.reducer
+export const qualitiesReducer = qualitiesSlice.reducer
 
 function isOutdated(timestamp) {
   return Date.now() - timestamp > 1000 * 60 * 10
 }
 
-export const loadQualitiesList = () => async (dispatch, getState) => {
+export const loadQualities = () => async (dispatch, getState) => {
   const { lastFetch } = getState().qualities
   if (!isOutdated(lastFetch)) return
   dispatch(qualitiesRequested())
@@ -62,4 +62,3 @@ export const getQualitiesByIds = (ids) => (state) => {
   return qualitiesArray
 }
 
-export default qualitiesReducer

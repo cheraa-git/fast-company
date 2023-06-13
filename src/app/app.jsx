@@ -10,15 +10,17 @@ import { LogoutLayout } from './layouts/logoutLayout'
 import 'react-toastify/dist/ReactToastify.css'
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-import { loadQualitiesList } from './store/qualities'
+import { loadQualities } from './store/qualities'
 import { loadProfessions } from './store/professions'
+import { loadUsers } from './store/users'
 
 export const App = () => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(loadQualitiesList())
+    dispatch(loadQualities())
     dispatch(loadProfessions())
+    dispatch(loadUsers())
   }, [])
   return (
     <>

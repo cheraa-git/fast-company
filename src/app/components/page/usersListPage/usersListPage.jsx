@@ -6,13 +6,13 @@ import { SearchStatus } from '../../ui/searchStatus'
 import { UsersTable } from '../../ui/usersTable'
 import _ from 'lodash'
 import { Spinner } from '../../ui/spinner'
-import { useUser } from '../../../hooks/useUsers'
 import { useAuth } from '../../../hooks/useAuth'
 import { useSelector } from 'react-redux'
 import { getProfessions, getProfessionsLoading } from '../../../store/professions'
+import { getUsers } from '../../../store/users'
 
 export const UsersListPage = () => {
-  const { users } = useUser()
+  const users = useSelector(getUsers())
   const { currentUser } = useAuth()
   const professions = useSelector(getProfessions())
   const professionsLoading = useSelector(getProfessionsLoading())

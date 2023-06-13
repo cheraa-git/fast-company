@@ -4,15 +4,15 @@ import { UserCard } from '../../ui/user/userCard'
 import Comments from '../../ui/comments'
 import { QualitiesCard } from '../../ui/user/qualitiesCard'
 import { MeetingsCard } from '../../ui/user/meetingsCard'
-import { useUser } from '../../../hooks/useUsers'
 import { CommentsProvider } from '../../../hooks/useComments'
 import { useAuth } from '../../../hooks/useAuth'
+import { useSelector } from 'react-redux'
+import { getUserById } from '../../../store/users'
 
 export const UserPage = () => {
   const { userId } = useParams()
-  const { getUserById } = useUser()
   const { currentUser } = useAuth()
-  const user = userId === currentUser._id ? currentUser : getUserById(userId)
+  const user = userId === currentUser._id ? currentUser : useSelector(getUserById(userId))
 
 
   if (!user) return <Spinner />

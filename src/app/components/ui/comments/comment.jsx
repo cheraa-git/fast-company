@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types'
 import { dateFormatter } from '../../../utils/dateFormatter'
-import { useUser } from '../../../hooks/useUsers'
 import { useAuth } from '../../../hooks/useAuth'
+import { useSelector } from 'react-redux'
+import { getUserById } from '../../../store/users'
 
 export const Comment = ({ comment, onDelete }) => {
-  const { getUserById } = useUser()
-  const user = getUserById(comment.userId)
+  const user = useSelector(getUserById(comment.userId))
   const { currentUser } = useAuth()
 
   const handleDelete = () => {

@@ -27,7 +27,7 @@ const professionsSlice = createSlice({
 })
 
 const { professionsReceived, professionsRequested, professionsRequestFailed } = professionsSlice.actions
-const professionsReducer = professionsSlice.reducer
+export const professionsReducer = professionsSlice.reducer
 
 function isOutdated(timestamp) {
   return Date.now() - timestamp > 1000 * 60 * 10
@@ -49,4 +49,3 @@ export const getProfessions = () => (state) => state.professions.entities
 export const getProfessionsLoading = () => (state) => state.professions.isLoading
 export const getProfessionById = (id) => (state) => state.professions.entities.find(p => p._id === id)
 
-export default professionsReducer

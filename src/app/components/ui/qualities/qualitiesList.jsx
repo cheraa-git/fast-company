@@ -2,7 +2,7 @@ import { Quality } from './quality'
 import PropTypes from 'prop-types'
 import { Spinner } from '../spinner'
 import { useDispatch, useSelector } from 'react-redux'
-import { getQualitiesByIds, getQualitiesLoadingStatus, loadQualitiesList } from '../../../store/qualities'
+import { getQualitiesByIds, getQualitiesLoadingStatus, loadQualities } from '../../../store/qualities'
 import { useEffect } from 'react'
 
 export const QualitiesList = ({ qualities }) => {
@@ -11,7 +11,7 @@ export const QualitiesList = ({ qualities }) => {
   const qualitiesList = useSelector(getQualitiesByIds(qualities))
 
   useEffect(() => {
-    dispatch(loadQualitiesList())
+    dispatch(loadQualities())
   }, [dispatch])
 
   if (qualitiesLoading) return <Spinner />
