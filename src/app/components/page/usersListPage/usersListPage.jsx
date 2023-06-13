@@ -6,14 +6,13 @@ import { SearchStatus } from '../../ui/searchStatus'
 import { UsersTable } from '../../ui/usersTable'
 import _ from 'lodash'
 import { Spinner } from '../../ui/spinner'
-import { useAuth } from '../../../hooks/useAuth'
 import { useSelector } from 'react-redux'
 import { getProfessions, getProfessionsLoading } from '../../../store/professions'
-import { getUsers } from '../../../store/users'
+import { getCurrentUserId, getUsers } from '../../../store/users'
 
 export const UsersListPage = () => {
   const users = useSelector(getUsers())
-  const { currentUser } = useAuth()
+  const currentUserId = useSelector(getCurrentUserId())
   const professions = useSelector(getProfessions())
   const professionsLoading = useSelector(getProfessionsLoading())
   const [currentPage, setCurrentPage] = useState(1)
@@ -56,7 +55,7 @@ export const UsersListPage = () => {
   }
 
   const getFilteredUsers = (data) => {
-    data = [...data].filter(u => u._id !== currentUser._id)
+    data = [...data].filter(u => u._id !== currentUserId)
     if (selectedProf) {
       return data.filter(user => user.profession === selectedProf._id)
     }

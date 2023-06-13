@@ -8,32 +8,23 @@ import AuthProvider from './hooks/useAuth'
 import { ProtectedRoute } from './components/common/protectedRoute'
 import { LogoutLayout } from './layouts/logoutLayout'
 import 'react-toastify/dist/ReactToastify.css'
-import { useEffect } from 'react'
-import { useDispatch } from 'react-redux'
-import { loadQualities } from './store/qualities'
-import { loadProfessions } from './store/professions'
-import { loadUsers } from './store/users'
+import { AppLoader } from './components/ui/hoc/appLoader'
 
 export const App = () => {
-  const dispatch = useDispatch()
-
-  useEffect(() => {
-    dispatch(loadQualities())
-    dispatch(loadProfessions())
-    dispatch(loadUsers())
-  }, [])
   return (
     <>
-      <AuthProvider>
-        <ToastContainer />
-        <Navbar />
+      <AppLoader>
+        <AuthProvider>
+          <ToastContainer />
+          <Navbar />
           <Switch>
             <Route exact path="/" component={MainLayout} />
             <Route path="/login/:type?" component={LoginLayout} />
             <ProtectedRoute path="/users/:userId?/:mode?" component={UserLayout} />
-              <Route path="/logout" component={LogoutLayout} />
-            </Switch>
-      </AuthProvider>
+            <Route path="/logout" component={LogoutLayout} />
+          </Switch>
+        </AuthProvider>
+      </AppLoader>
     </>
   )
 }

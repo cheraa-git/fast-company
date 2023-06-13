@@ -5,15 +5,27 @@ import localStorageService from '../services/localStorage.service'
 import { getRandomAvatar, getRandomInt } from '../utils/random'
 import history from '../utils/history'
 
+const initialState = localStorageService.getAccessToken()
+  ? {
+      entities: [],
+      isLoading: true,
+      error: null,
+      auth: { userId: localStorageService.getUserId() },
+      isLoggedIn: true,
+      dataLoaded: false
+    }
+  : {
+      entities: [],
+      isLoading: false,
+      error: null,
+      auth: null,
+      isLoggedIn: false,
+      dataLoaded: false
+    }
+
 const usersSlice = createSlice({
   name: 'users',
-  initialState: {
-    entities: [],
-    isLoading: true,
-    error: null,
-    auth: null,
-    isLoggedIn: false
-  },
+  initialState,
   reducers: {
     usersRequested: state => {
       state.isLoading = true
@@ -21,13 +33,15 @@ const usersSlice = createSlice({
     usersReceived: (state, action) => {
       state.entities = action.payload
       state.isLoading = false
+      state.dataLoaded = true
     },
     usersRequestFailed: (state, action) => {
       state.error = action.payload
       state.isLoading = false
     },
     authRequestSuccess: (state, action) => {
-      state.auth = { ...action.payload, isLoggedIn: true }
+      state.auth = action.payload
+      state.isLoggedIn = true
     },
     authRequestFailed: (state, action) => {
       state.error = action.payload
@@ -95,6 +109,21 @@ function createUser(payload) {
   }
 }
 
+export const login = ({ payload, redirect }) => async (dispatch) => {
+  dispatch(authRequested())
+  try {
+    const data = await authService.login(payload)
+    dispatch(authRequestSuccess({ userId: data.localId }))
+    localStorageService.setTokens(data)
+    history.push(redirect)
+  } catch (error) {
+    dispatch(authRequestFailed(error.message))
+  }
+}
 
 export const getUserById = (id) => (state) => state.users.entities.find(user => user._id === id)
 export const getUsers = () => (state) => state.users.entities
+export const getIsLoggedIn = () => (state) => state.users.isLoggedIn
+export const getDataStatus = () => (state) => state.users.dataLoaded
+export const getCurrentUserId = () => (state) => state.users.auth.userId
+export const getUsersLoadingStatus = () => (state) => state.users.isLoading
