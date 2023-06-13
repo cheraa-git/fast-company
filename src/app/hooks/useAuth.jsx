@@ -6,7 +6,7 @@ import { toast } from 'react-toastify'
 import localStorageService from '../services/localStorage.service'
 import { Spinner } from '../components/ui/spinner'
 import { useHistory } from 'react-router-dom'
-import { getRandomAvatar } from '../utils/randomAvatar'
+import { getRandomAvatar } from '../utils/random'
 
 export const httpAuth = axios.create({
   baseURL: 'https://identitytoolkit.googleapis.com/v1',

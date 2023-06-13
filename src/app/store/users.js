@@ -2,6 +2,8 @@ import { createAction, createSlice } from '@reduxjs/toolkit'
 import userService from '../services/user.service'
 import authService from '../services/auth.service'
 import localStorageService from '../services/localStorage.service'
+import { getRandomAvatar, getRandomInt } from '../utils/random'
+import history from '../utils/history'
 
 const usersSlice = createSlice({
   name: 'users',
@@ -29,14 +31,26 @@ const usersSlice = createSlice({
     },
     authRequestFailed: (state, action) => {
       state.error = action.payload
+    },
+    userCreated: (state, action) => {
+      state.entities.push(action.payload)
     }
   }
 })
 
-const { usersReceived, usersRequested, usersRequestFailed, authRequestSuccess, authRequestFailed } = usersSlice.actions
+const {
+  usersReceived,
+  usersRequested,
+  usersRequestFailed,
+  authRequestSuccess,
+  authRequestFailed,
+  userCreated
+} = usersSlice.actions
 export const usersReducer = usersSlice.reducer
 
 const authRequested = createAction('users/authRequested')
+const userCreateRequested = createAction('users/userCreateRequested')
+const userCreateFailed = createAction('users/userCreateFailed')
 
 export const loadUsers = () => async (dispatch) => {
   dispatch(usersRequested())
@@ -55,10 +69,32 @@ export const signUp = ({ email, password, ...rest }) => async (dispatch) => {
     console.log(data)
     localStorageService.setTokens(data)
     dispatch(authRequestSuccess({ userId: data.localId }))
+    dispatch(createUser({
+      _id: data.localId,
+      email,
+      rate: getRandomInt(1, 5),
+      completedMeetings: getRandomInt(0, 200),
+      image: getRandomAvatar(),
+      ...rest
+    }))
   } catch (error) {
     dispatch(authRequestFailed(error.message))
   }
 }
+
+function createUser(payload) {
+  return async (dispatch) => {
+    dispatch(userCreateRequested())
+    try {
+      const { content } = await userService.create(payload)
+      dispatch(userCreated(content))
+      history.push('/users')
+    } catch (error) {
+      dispatch(userCreateFailed())
+    }
+  }
+}
+
 
 export const getUserById = (id) => (state) => state.users.entities.find(user => user._id === id)
 export const getUsers = () => (state) => state.users.entities
