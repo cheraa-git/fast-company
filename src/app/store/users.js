@@ -49,11 +49,14 @@ const usersSlice = createSlice({
     userCreated: (state, action) => {
       state.entities.push(action.payload)
     },
-    userLoggedOut: state => {
+    userLoggedOut: (state) => {
       state.entities = []
       state.auth = null
       state.isLoggedIn = false
       state.dataLoaded = false
+    },
+    userUpdated: (state, action) => {
+      state.entities = state.entities.map(user => user._id === action.payload._id ? action.payload : user)
     }
   }
 })
@@ -65,13 +68,16 @@ const {
   authRequestSuccess,
   authRequestFailed,
   userCreated,
-  userLoggedOut
+  userLoggedOut,
+  userUpdated
 } = usersSlice.actions
 export const usersReducer = usersSlice.reducer
 
 const authRequested = createAction('users/authRequested')
 const userCreateRequested = createAction('users/userCreateRequested')
 const userCreateFailed = createAction('users/userCreateFailed')
+const userUpdateRequested = createAction('users/userUpdateRequested')
+const userUpdateFailed = createAction('users/userUpdateFailed')
 
 export const loadUsers = () => async (dispatch) => {
   dispatch(usersRequested())
@@ -132,6 +138,25 @@ export const logout = () => async (dispatch) => {
   localStorageService.removeAuthData()
   dispatch(userLoggedOut())
   history.push('/')
+}
+
+export const updateUser = (data) => async (dispatch, getState) => {
+  dispatch(userUpdateRequested())
+  const currentUser = getCurrentUser()(getState())
+  try {
+    if (data.email && data.email !== currentUser?.email) await authService.updateEmail(data.email)
+    const { content } = await userService.update({ ...currentUser, ...data })
+    dispatch(userUpdated(content))
+    history.push(`/users/${content._id}`)
+  } catch (error) {
+    dispatch(userUpdateFailed())
+    const message = error?.response?.data?.error?.message
+    if (message === 'CREDENTIAL_TOO_OLD_LOGIN_AGAIN' && window.confirm('To update your email address, you need to log in again. Continue?')) {
+      dispatch(logout())
+      history.push('/login')
+    }
+    if (message === 'EMAIL_EXISTS') dispatch(authRequestFailed('Email already exists'))
+  }
 }
 
 export const getUserById = (id) => (state) => state.users.entities.find(user => user._id === id)

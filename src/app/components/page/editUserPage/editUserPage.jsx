@@ -1,17 +1,16 @@
 import { EditUserForm } from '../../ui/forms/editUserForm'
 import { Spinner } from '../../ui/spinner'
 import { useHistory, useParams } from 'react-router-dom'
-import { useAuth } from '../../../hooks/useAuth'
 import { useEffect } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { getQualities, getQualitiesLoadingStatus } from '../../../store/qualities'
 import { getProfessions, getProfessionsLoading } from '../../../store/professions'
-import { getCurrentUser } from '../../../store/users'
+import { getCurrentUser, updateUser } from '../../../store/users'
 
 export const EditUserPage = () => {
+  const dispatch = useDispatch()
   const history = useHistory()
   const { userId } = useParams()
-  const { updateUser } = useAuth()
   const currentUser = useSelector(getCurrentUser())
   const professions = useSelector(getProfessions())
   const professionsLoading = useSelector(getProfessionsLoading())
@@ -29,8 +28,7 @@ export const EditUserPage = () => {
   }, [userId])
 
   const handleSubmit = async (data) => {
-    await updateUser({ ...data, qualities: data.qualities.map(q => q.value) })
-    history.push(`/users/${userId}`)
+    dispatch(updateUser({ ...data, qualities: data.qualities.map(q => q.value) }))
   }
 
 
