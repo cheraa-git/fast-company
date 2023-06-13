@@ -1,10 +1,11 @@
 import { Link, useLocation } from 'react-router-dom'
-import { useAuth } from '../../hooks/useAuth'
 import { NavProfile } from './navProfile'
+import { useSelector } from 'react-redux'
+import { getIsLoggedIn } from '../../store/users'
 
 export const Navbar = () => {
   const location = useLocation()
-  const { currentUser } = useAuth()
+  const isLoggedIn = useSelector(getIsLoggedIn())
 
   const getLinkClass = (path) => {
     if (path === location.pathname) return 'nav-link disabled'
@@ -18,11 +19,11 @@ export const Navbar = () => {
         <div className="d-flex">
           <Link to="/" className={getLinkClass('/')}>Main</Link>
 
-          {currentUser && <Link to="/users" className={getLinkClass('/users')}>Users</Link>}
+          {isLoggedIn && <Link to="/users" className={getLinkClass('/users')}>Users</Link>}
         </div>
 
         {
-          currentUser
+          isLoggedIn
             ? <NavProfile />
             : <Link to="/login" className={getLinkClass('/login')}>Login</Link>
 

@@ -1,15 +1,18 @@
-import { useAuth } from '../../hooks/useAuth'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import { getCurrentUser } from '../../store/users'
+import { Spinner } from './spinner'
 
 export const NavProfile = () => {
-  const { currentUser } = useAuth()
   const [isOpen, setIsOpen] = useState(false)
+  const currentUser = useSelector(getCurrentUser())
 
   const toggleMenu = () => {
     setIsOpen(prev => !prev)
   }
 
+  if (!currentUser) return <Spinner />
   return (
     <div className="dropdown">
       <div className="btn dropdown-toggle d-flex align-items-center" onClick={toggleMenu}>

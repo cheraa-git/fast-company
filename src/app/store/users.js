@@ -48,6 +48,12 @@ const usersSlice = createSlice({
     },
     userCreated: (state, action) => {
       state.entities.push(action.payload)
+    },
+    userLoggedOut: state => {
+      state.entities = []
+      state.auth = null
+      state.isLoggedIn = false
+      state.dataLoaded = false
     }
   }
 })
@@ -58,7 +64,8 @@ const {
   usersRequestFailed,
   authRequestSuccess,
   authRequestFailed,
-  userCreated
+  userCreated,
+  userLoggedOut
 } = usersSlice.actions
 export const usersReducer = usersSlice.reducer
 
@@ -121,9 +128,16 @@ export const login = ({ payload, redirect }) => async (dispatch) => {
   }
 }
 
+export const logout = () => async (dispatch) => {
+  localStorageService.removeAuthData()
+  dispatch(userLoggedOut())
+  history.push('/')
+}
+
 export const getUserById = (id) => (state) => state.users.entities.find(user => user._id === id)
 export const getUsers = () => (state) => state.users.entities
 export const getIsLoggedIn = () => (state) => state.users.isLoggedIn
 export const getDataStatus = () => (state) => state.users.dataLoaded
 export const getCurrentUserId = () => (state) => state.users.auth.userId
+export const getCurrentUser = () => (state) => state.users.entities.find(user => user._id === state.users.auth.userId)
 export const getUsersLoadingStatus = () => (state) => state.users.isLoading

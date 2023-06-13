@@ -1,12 +1,11 @@
 import PropTypes from 'prop-types'
 import { dateFormatter } from '../../../utils/dateFormatter'
-import { useAuth } from '../../../hooks/useAuth'
 import { useSelector } from 'react-redux'
-import { getUserById } from '../../../store/users'
+import { getCurrentUserId, getUserById } from '../../../store/users'
 
 export const Comment = ({ comment, onDelete }) => {
   const user = useSelector(getUserById(comment.userId))
-  const { currentUser } = useAuth()
+  const currentUserId = useSelector(getCurrentUserId())
 
   const handleDelete = () => {
     onDelete(comment._id)
@@ -33,7 +32,7 @@ export const Comment = ({ comment, onDelete }) => {
                     <span className="small ms-2">{dateFormatter(comment.created_at)}</span>
                   </p>
                   {
-                    comment.userId === currentUser._id &&
+                    comment.userId === currentUserId &&
                     <button className="btn btn-sm text-primary d-flex align-items-center" onClick={handleDelete}>
                       <i className="bi bi-x-lg" />
                     </button>

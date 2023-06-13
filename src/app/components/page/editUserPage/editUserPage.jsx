@@ -6,11 +6,13 @@ import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { getQualities, getQualitiesLoadingStatus } from '../../../store/qualities'
 import { getProfessions, getProfessionsLoading } from '../../../store/professions'
+import { getCurrentUser } from '../../../store/users'
 
 export const EditUserPage = () => {
   const history = useHistory()
   const { userId } = useParams()
-  const { currentUser, updateUser } = useAuth()
+  const { updateUser } = useAuth()
+  const currentUser = useSelector(getCurrentUser())
   const professions = useSelector(getProfessions())
   const professionsLoading = useSelector(getProfessionsLoading())
   const qualities = useSelector(getQualities())

@@ -1,12 +1,13 @@
-import { useAuth } from '../hooks/useAuth'
 import { useEffect } from 'react'
 import { Spinner } from '../components/ui/spinner'
+import { useDispatch } from 'react-redux'
+import { logout } from '../store/users'
 
 export const LogoutLayout = () => {
-  const { logOut } = useAuth()
+  const dispatch = useDispatch()
 
   useEffect(() => {
-    logOut()
+    dispatch(logout())
   }, [])
 
   return <Spinner />

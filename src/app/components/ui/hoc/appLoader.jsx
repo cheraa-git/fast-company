@@ -15,7 +15,7 @@ export const AppLoader = ({ children }) => {
     dispatch(loadQualities())
     dispatch(loadProfessions())
     if (isLoggedIn) dispatch(loadUsers())
-  }, [])
+  }, [isLoggedIn])
   if (usersStatusLoading) return <Spinner />
   return children
 }
