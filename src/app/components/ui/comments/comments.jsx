@@ -1,9 +1,8 @@
 import { CommentForm } from '../forms/commentForm'
 import { Comment } from './comment'
-import { useComments } from '../../../hooks/useComments'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
-import { getComments, getCommentsLoading, loadComments } from '../../../store/comments'
+import { createComment, getComments, getCommentsLoading, loadComments, removeComment } from '../../../store/comments'
 import { Spinner } from '../spinner'
 import { useParams } from 'react-router-dom'
 
@@ -12,18 +11,17 @@ export const Comments = () => {
   const { userId } = useParams()
   const isLoading = useSelector(getCommentsLoading())
   const comments = useSelector(getComments())
-  const { createComment, removeComment } = useComments()
 
   useEffect(() => {
     dispatch(loadComments(userId))
   }, [userId])
 
   const handleSubmit = (data) => {
-    createComment(data)
+    dispatch(createComment(data, userId))
   }
 
   const handleDelete = (commentId) => {
-    removeComment(commentId)
+    dispatch(removeComment(commentId))
   }
 
   return (
