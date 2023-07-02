@@ -34,7 +34,7 @@ function isOutdated(timestamp) {
 }
 
 export const loadProfessions = () => async (dispatch, getState) => {
-  const { lastFetch } = getState().qualities
+  const { lastFetch } = getState().professions
   if (!isOutdated(lastFetch)) return
   dispatch(professionsRequested())
   try {
