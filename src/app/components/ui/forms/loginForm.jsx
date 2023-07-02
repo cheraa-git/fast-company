@@ -4,22 +4,21 @@ import { TextField } from '../../common/form/textField'
 import { CheckBoxField } from '../../common/form/checkBoxField'
 import { loginValidatorConfig } from '../../../utils/validator/validatorConfigs'
 import { useHistory } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
-import { login } from '../../../store/users'
+import { useDispatch, useSelector } from 'react-redux'
+import { getAuthError, login } from '../../../store/users'
 
 export const LoginForm = () => {
   const dispatch = useDispatch()
   const history = useHistory()
+  const loginError = useSelector(getAuthError())
   const [data, setData] = useState({ email: '', password: '', stayOn: false })
   const [errors, setErrors] = useState({})
-  const [enterError, setEnterError] = useState(null)
 
   useEffect(() => {
     validate()
   }, [data])
   const handleChange = (target) => {
     setData(prev => ({ ...prev, [target.name]: target.value }))
-    setEnterError(null)
   }
 
   const validate = () => {
@@ -58,8 +57,8 @@ export const LoginForm = () => {
       <CheckBoxField value={data.stayOn} onChange={handleChange} name="stayOn">
         Stay logged in
       </CheckBoxField>
-      <p className="text-danger">{enterError}</p>
-      <button className="btn btn-primary w-100 mx-auto" disabled={!isValid || !!enterError}>Submit</button>
+      <p className="text-danger">{loginError}</p>
+      <button className="btn btn-primary w-100 mx-auto" disabled={!isValid}>Submit</button>
     </form>
   )
 }

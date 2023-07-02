@@ -4,6 +4,7 @@ import authService from '../services/auth.service'
 import localStorageService from '../services/localStorage.service'
 import { getRandomAvatar, getRandomInt } from '../utils/random'
 import history from '../utils/history'
+import { generateAuthError } from '../utils/generateAuthError'
 
 const initialState = localStorageService.getAccessToken()
   ? {
@@ -46,6 +47,9 @@ const usersSlice = createSlice({
     authRequestFailed: (state, action) => {
       state.error = action.payload
     },
+    authRequested: (state) => {
+      state.error = null
+    },
     userCreated: (state, action) => {
       state.entities.push(action.payload)
     },
@@ -69,11 +73,11 @@ const {
   authRequestFailed,
   userCreated,
   userLoggedOut,
-  userUpdated
+  userUpdated,
+  authRequested
 } = usersSlice.actions
 export const usersReducer = usersSlice.reducer
 
-const authRequested = createAction('users/authRequested')
 const userCreateRequested = createAction('users/userCreateRequested')
 const userCreateFailed = createAction('users/userCreateFailed')
 const userUpdateRequested = createAction('users/userUpdateRequested')
@@ -130,7 +134,13 @@ export const login = ({ payload, redirect }) => async (dispatch) => {
     localStorageService.setTokens(data)
     history.push(redirect)
   } catch (error) {
-    dispatch(authRequestFailed(error.message))
+    const { code, message } = error.response.data.error
+    if (code === 400) {
+      const errorMessage = generateAuthError(message)
+      dispatch(authRequestFailed(errorMessage))
+    } else {
+      dispatch(authRequestFailed(error.message))
+    }
   }
 }
 
@@ -166,3 +176,4 @@ export const getDataStatus = () => (state) => state.users.dataLoaded
 export const getCurrentUserId = () => (state) => state.users.auth.userId
 export const getCurrentUser = () => (state) => state.users.entities.find(user => user._id === state.users.auth.userId)
 export const getUsersLoadingStatus = () => (state) => state.users.isLoading
+export const getAuthError = () => (state) => state.users.error
